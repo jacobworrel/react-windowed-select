@@ -1,10 +1,18 @@
-# my-component
+# react-windowed-select
 
 [![Travis][build-badge]][build]
 [![npm package][npm-badge]][npm]
 [![Coveralls][coveralls-badge]][coveralls]
 
 Describe my-component here.
+
+## Additional Props
+
+Below are 
+
+#### windowThreshold | default = 100
+
+The number of options beyond which the menu will be windowed.
 
 [build-badge]: https://img.shields.io/travis/user/repo/master.png?style=flat-square
 [build]: https://travis-ci.org/user/repo
