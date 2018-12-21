@@ -2,9 +2,6 @@ import { VariableSizeList as List } from 'react-window';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const GROUP_HEADER_HEIGHT = 17;
-const GROUP_PADDING = 16;
-
 class MenuList extends React.Component {
   constructor (props) {
     super(props);
@@ -30,20 +27,28 @@ class MenuList extends React.Component {
           focusedIndex = index;
         }
 
+        //todo figure out how to get computed heights of 'option', 'group' and 'groupHeading' components
         const { height: optionHeight = 35 } = nextProps.getStyles('option', nextProps);
-
+        const groupStyles = nextProps.getStyles('group', nextProps);
+        // const groupHeadingStyles = nextProps.getStyles('groupHeading', nextProps);
         // handle grouped options
         if (option.props.data.options) {
-          const height = option.props.data.options.length * optionHeight + GROUP_HEADER_HEIGHT + GROUP_PADDING;
+          const groupHeaderHeight= 17;
+          const height = option.props.data.options.length * optionHeight
+            + groupHeaderHeight
+            + groupStyles.paddingBottom
+            + groupStyles.paddingTop;
+
           totalHeight += height;
 
           result.push(height);
           return result;
         }
+
         totalHeight += optionHeight;
+
         result.push(optionHeight);
         return result;
-
       }, []);
 
       const currentIndex = Math.max(focusedIndex, 0);
@@ -58,7 +63,6 @@ class MenuList extends React.Component {
         itemCount,
         menuHeight,
       };
-
     }
 
     return null;
