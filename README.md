@@ -1,16 +1,14 @@
-# react-windowed-select
+# react-window-select
 
 [![Travis][build-badge]][build]
 [![npm package][npm-badge]][npm]
 [![Coveralls][coveralls-badge]][coveralls]
 
-Describe my-component here.
+An integration of `react-window` with `react-select` v2 to efficiently handle large lists.
 
-## Additional Props
+### Additional Props
 
-Below are 
-
-#### windowThreshold | default = 100
+##### windowThreshold | default = 100
 
 The number of options beyond which the menu will be windowed.
 

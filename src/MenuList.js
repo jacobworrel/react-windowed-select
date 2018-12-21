@@ -23,6 +23,7 @@ class MenuList extends React.Component {
       const children = React.Children.toArray(nextProps.children);
       let focusedIndex = 0;
       let totalHeight = 0;
+
       const heights = children.reduce((result, option, index) => {
         const { props: { isFocused } } = option;
         if (isFocused) {
@@ -30,8 +31,9 @@ class MenuList extends React.Component {
         }
 
         const { height: optionHeight = 35 } = nextProps.getStyles('option', nextProps);
+
+        // handle grouped options
         if (option.props.data.options) {
-          console.log('INSIDE');
           const height = option.props.data.options.length * optionHeight + GROUP_HEADER_HEIGHT + GROUP_PADDING;
           totalHeight += height;
 
@@ -43,12 +45,7 @@ class MenuList extends React.Component {
         return result;
 
       }, []);
-      console.log('TOTAL HEIGHT', totalHeight);
-      console.log('HEIGHTS', heights);
-      // const currentIndex = Math.max(
-      //   children.findIndex(({ props: { isFocused } }) => isFocused),
-      //   0
-      // );
+
       const currentIndex = Math.max(focusedIndex, 0);
       const itemCount = children.length;
       const { maxHeight } = nextProps.getStyles('menuList', nextProps);
@@ -73,13 +70,6 @@ class MenuList extends React.Component {
   }
 
   getItemSize (index) {
-    // const option = this.props.options[idx];
-    // const { height: optionHeight = 35 } = this.props.getStyles('option', this.props);
-    // if (option.options) {
-    //   return option.options.length * optionHeight + GROUP_HEADER_HEIGHT;
-    // }
-    // return optionHeight;
-
     return this.state.heights[index];
   }
 
@@ -88,20 +78,9 @@ class MenuList extends React.Component {
       children: rawChildren,
       getStyles,
       getValue,
-      options,
     } = this.props;
 
-    const { itemCount, menuHeight } = this.state;
-
-    const [ value ] = getValue();
-    const { maxHeight } = getStyles('menuList', this.props);
-
-    // const { height: optionHeight = 35 } = getStyles('option', this.props);
-    // const initialOffset = options.indexOf(value) * optionHeight;
-
-    // const menuHeight = itemCount * optionHeight < maxHeight
-    //   ? itemCount * optionHeight
-    //   : maxHeight;
+    const { menuHeight, itemCount } = this.state;
 
     const children = React.Children.toArray(rawChildren);
 
@@ -109,9 +88,8 @@ class MenuList extends React.Component {
       <List
         ref={this.list}
         height={menuHeight}
-        itemCount={children.length}
+        itemCount={itemCount}
         itemSize={this.getItemSize}
-        // initialScrollOffset={initialOffset}
       >
         {({ index, style }) => <div style={style}>{children[index]}</div>}
       </List>
