@@ -8,6 +8,7 @@ import WindowSelect from '../src';
 import * as su from './storyUtil';
 import * as R from 'ramda';
 
+const options1 = su.createOptions(R.range(1,2));
 const options50 = su.createOptions(R.range(1, 51));
 const options200 = su.createOptions(R.range(1, 201));
 const options1000 = su.createOptions(R.range(1, 1001));
@@ -22,7 +23,44 @@ const groupedOptions = [
 storiesOf('Single Select', module)
   .add('non-windowed - 50 options', () => <WindowSelect options={options50} />)
   .add('non-windowed - grouped', () => <WindowSelect options={groupedOptions} />)
-  .add('windowed - 1,000 options', () => <WindowSelect options={options1000} />)
+  .add('windowed - 1 option', () => (
+    <WindowSelect options={options1}/>
+  ))
+  .add('windowed - 1,000 options', () => (<WindowSelect options={options1000} />))
   .add('windowed - 5,000 options', () => <WindowSelect options={options5000} />)
   .add('windowed - 10,000 options', () => <WindowSelect options={options10000} />)
-  .add('windowed - grouped', () => <WindowSelect options={groupedOptions} windowThreshold={0} />);
+  .add('windowed - grouped', () => <WindowSelect options={groupedOptions} windowThreshold={0} />)
+  .add('windowed - custom styles', () => (
+    <WindowSelect
+      options={options200}
+      styles={{
+        option: (base) => ({
+          ...base,
+          fontSize: 20,
+          height: 40,
+        }),
+      }}
+    />
+  ))
+  .add('windowed - custom styles & grouped', () => (
+    <WindowSelect
+      menuIsOpen={true}
+      options={groupedOptions}
+      styles={{
+        group: (base) => ({
+          paddingBottom: 20,
+          paddingTop: 20,
+          border: '50px solid black',
+        }),
+        groupHeading: (base) => ({
+          ...base,
+          // height: 50,
+        }),
+        option: (base) => ({
+          ...base,
+          fontSize: 20,
+          height: 40,
+        }),
+      }}
+    />
+  ));

@@ -1,6 +1,6 @@
-import { VariableSizeList as List } from 'react-window';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { VariableSizeList as List } from 'react-window';
 
 class MenuList extends React.Component {
   constructor (props) {
@@ -12,48 +12,69 @@ class MenuList extends React.Component {
     this.state = {
       currentIndex: 0,
       children: null,
+      heights: [],
+      itemCount: 0,
+      menuHeight: 0,
     };
   }
 
   static getDerivedStateFromProps (nextProps, prevState) {
     if (nextProps.children !== prevState.children) {
       const children = React.Children.toArray(nextProps.children);
-      let focusedIndex = 0;
-      let totalHeight = 0;
 
-      const heights = children.reduce((result, option, index) => {
-        const { props: { isFocused } } = option;
-        if (isFocused) {
-          focusedIndex = index;
-        }
+      const { getStyles } = nextProps;
 
-        //todo figure out how to get computed heights of 'option', 'group' and 'groupHeading' components
-        const { height: optionHeight = 35 } = nextProps.getStyles('option', nextProps);
-        const groupStyles = nextProps.getStyles('group', nextProps);
-        // const groupHeadingStyles = nextProps.getStyles('groupHeading', nextProps);
-        // handle grouped options
-        if (option.props.data.options) {
+      // calc option height
+      const heights = children.map((option = {}) => {
+        const {
+          props: {
+            isFocused,
+            data: {
+              options = [],
+            } = {},
+          } = {},
+        } = option;
+
+        const { height: optionHeight = 35 } = getStyles('option', nextProps);
+
+        if (options) {
+          const {
+            height: groupHeight = 0,
+            marginBottom: groupMarginBottom = 0,
+            marginTop: groupMarginTop = 0,
+            paddingBottom: groupPaddingBottom = 8,
+            paddingTop: groupPaddingTop = 8,
+          } = getStyles('group', nextProps);
+
+          const {
+            height: groupHeadingHeight = 0,
+            marginBottom: groupHeadingMarginBottom = 0,
+            marginTop: groupHeadingMarginTop = 0,
+            paddingBottom: groupHeadingPaddingBottom = 8,
+            paddingTop: groupHeadingPaddingTop = 8,
+          } = getStyles('groupHeading', nextProps);
+
           const groupHeaderHeight= 17;
-          const height = option.props.data.options.length * optionHeight
+
+          return options.length
+            * optionHeight
             + groupHeaderHeight
-            + groupStyles.paddingBottom
-            + groupStyles.paddingTop;
-
-          totalHeight += height;
-
-          result.push(height);
-          return result;
+            + groupPaddingBottom
+            + groupPaddingTop;
         }
 
-        totalHeight += optionHeight;
+        return optionHeight;
+      });
 
-        result.push(optionHeight);
-        return result;
-      }, []);
-
+      const focusedIndex = children.findIndex(({ props: { isFocused } = {} }) => isFocused === true);
       const currentIndex = Math.max(focusedIndex, 0);
+
       const itemCount = children.length;
-      const { maxHeight } = nextProps.getStyles('menuList', nextProps);
+
+      // calc menu height
+      const sum = (a, b) => a + b;
+      const totalHeight = heights.reduce(sum, 0);
+      const { maxHeight } = getStyles('menuList', nextProps);
       const menuHeight = Math.min(maxHeight, totalHeight);
 
       return {
@@ -78,25 +99,21 @@ class MenuList extends React.Component {
   }
 
   render() {
-    const {
-      children: rawChildren,
-      getStyles,
-      getValue,
-    } = this.props;
-
+    const { children: rawChildren, innerRef, innerProps } = this.props;
     const { menuHeight, itemCount } = this.state;
-
     const children = React.Children.toArray(rawChildren);
 
     return (
-      <List
-        ref={this.list}
-        height={menuHeight}
-        itemCount={itemCount}
-        itemSize={this.getItemSize}
-      >
-        {({ index, style }) => <div style={style}>{children[index]}</div>}
-      </List>
+      <div ref={innerRef} {...innerProps}>
+        <List
+          ref={this.list}
+          height={menuHeight}
+          itemCount={itemCount}
+          itemSize={this.getItemSize}
+        >
+          {({ index, style }) => <div style={style}>{children[index]}</div>}
+        </List>
+      </div>
     );
 
   }
