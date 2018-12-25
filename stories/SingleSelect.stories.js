@@ -1,37 +1,29 @@
 import React from 'react';
 
 import { storiesOf } from '@storybook/react';
-import { action } from '@storybook/addon-actions';
-import { linkTo } from '@storybook/addon-links';
 
 import WindowSelect from '../src';
 import * as su from './storyUtil';
 import * as R from 'ramda';
 
-const options1 = su.createOptions(R.range(1,2));
-const options50 = su.createOptions(R.range(1, 51));
-const options200 = su.createOptions(R.range(1, 201));
-const options1000 = su.createOptions(R.range(1, 1001));
-const options5000 = su.createOptions(R.range(1, 5001));
-const options10000 = su.createOptions(R.range(1, 10001));
-
-const groupedOptions = [
-  { label: `Group 1`, options: su.createOptions(R.range(1, 4)) },
-  { label: `Group 2`, options: su.createOptions(R.range(4, 7)) },
-];
+import { options1 } from './storyUtil';
+import { options50 } from './storyUtil';
+import { options200 } from './storyUtil';
+import { groupedOptions } from './storyUtil';
 
 storiesOf('Single Select', module)
-  .add('non-windowed - 50 options', () => <WindowSelect options={options50} />)
-  .add('non-windowed - grouped', () => <WindowSelect options={groupedOptions} />)
+  .add('non-windowed - 50 options', () => <WindowSelect options={options50} menuIsOpen />)
+  .add('non-windowed - grouped', () => <WindowSelect options={groupedOptions} menuIsOpen />)
   .add('windowed - 1 option', () => (
-    <WindowSelect options={options1}/>
+    <WindowSelect options={options1} menuIsOpen windowThreshold={0} />
   ))
-  .add('windowed - 1,000 options', () => (<WindowSelect options={options1000} />))
-  .add('windowed - 5,000 options', () => <WindowSelect options={options5000} />)
-  .add('windowed - 10,000 options', () => <WindowSelect options={options10000} />)
-  .add('windowed - grouped', () => <WindowSelect options={groupedOptions} windowThreshold={0} />)
+.add('windowed - 200 options', () => (
+  <WindowSelect options={options200} menuIsOpen />
+))
+  .add('windowed - grouped', () => <WindowSelect options={groupedOptions} menuIsOpen windowThreshold={0} />)
   .add('windowed - custom styles', () => (
     <WindowSelect
+      menuIsOpen
       options={options200}
       styles={{
         option: (base) => ({
@@ -39,18 +31,25 @@ storiesOf('Single Select', module)
           fontSize: 20,
           height: 40,
         }),
+        menuList: (base) => ({
+          ...base,
+          maxHeight: 200,
+        })
       }}
     />
   ))
   .add('windowed - custom styles & grouped', () => (
     <WindowSelect
-      menuIsOpen={true}
+      menuIsOpen
       options={groupedOptions}
+      windowThreshold={0}
       styles={{
         group: (base) => ({
           paddingBottom: 20,
           paddingTop: 20,
-          border: '50px solid black',
+          marginBottom: 20,
+          marginTop: 20,
+          border: '20px solid black',
         }),
         groupHeading: (base) => ({
           ...base,
