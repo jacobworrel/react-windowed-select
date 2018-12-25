@@ -34,10 +34,6 @@ class MenuList extends React.PureComponent {
     };
   }
 
-  static coerceToNum (x) {
-
-  }
-
   static getDerivedStateFromProps (nextProps, prevState) {
     const { height: optionHeight = 35 } = nextProps.getStyles('option', nextProps);
 
