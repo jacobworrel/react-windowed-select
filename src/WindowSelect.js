@@ -21,6 +21,12 @@ class WindowSelect extends React.Component {
               : {}
           )
         }}
+        styles={{
+          groupHeading: (base) => ({
+            ...base,
+            marginBottom: 3,
+          }),
+        }}
       />
     );
   }

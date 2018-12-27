@@ -3,8 +3,6 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 
 import WindowSelect from '../src';
-import * as su from './storyUtil';
-import * as R from 'ramda';
 
 import { options1 } from './storyUtil';
 import { options50 } from './storyUtil';
@@ -21,6 +19,7 @@ storiesOf('Single Select', module)
   <WindowSelect options={options200} menuIsOpen />
 ))
   .add('windowed - grouped', () => <WindowSelect options={groupedOptions} menuIsOpen windowThreshold={0} />)
+  .add('windowed - no options', () => <WindowSelect options={[]} menuIsOpen windowThreshold={0} />)
   .add('windowed - custom styles', () => (
     <WindowSelect
       menuIsOpen
@@ -44,21 +43,16 @@ storiesOf('Single Select', module)
       options={groupedOptions}
       windowThreshold={0}
       styles={{
-        group: (base) => ({
-          paddingBottom: 20,
-          paddingTop: 20,
-          marginBottom: 20,
-          marginTop: 20,
-          border: '20px solid black',
-        }),
+        // group: (base) => ({
+        //   paddingBottom: 20,
+        //   paddingTop: 20,
+        //   marginBottom: 20,
+        //   marginTop: 20,
+        //   border: '20px solid black',
+        // }),
         groupHeading: (base) => ({
           ...base,
-          // height: 50,
-        }),
-        option: (base) => ({
-          ...base,
-          fontSize: 20,
-          height: 40,
+          // height: 20,
         }),
       }}
     />

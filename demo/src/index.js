@@ -47,7 +47,7 @@ class Demo extends Component {
         />
 
         <h4>Grouped</h4>
-        <WindowSelect options={groupedOptions} />
+        <WindowSelect options={groupedOptions} windowThreshold={0} />
 
         <h2>Multi Select</h2>
 

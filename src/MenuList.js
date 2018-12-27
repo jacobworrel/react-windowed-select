@@ -3,13 +3,34 @@ import React from 'react';
 import { VariableSizeList as List } from 'react-window';
 
 const coerceToNum = x => {
+  if (typeof x !== 'number' && typeof x !== 'undefined') {
+    console.warn(`${x} is not a number. Please use numeric values.`);
+  }
   if (typeof x !== 'number') {
     return 0;
   }
   return x;
 };
 
-class OptionWrapper extends React.PureComponent {
+const flattenChildren = children => children.reduce((result, child) => {
+  const {
+    props: {
+      children: nestedChildren = [],
+    } = {},
+  } = child;
+
+  return [
+    ...result,
+    React.cloneElement(
+      child,
+      { type: 'group' },
+      []
+    ),
+    ...nestedChildren,
+  ];
+}, []);
+
+class ItemWrapper extends React.PureComponent {
   render() {
     const { data, index, style } = this.props;
     return (
@@ -37,66 +58,79 @@ class MenuList extends React.PureComponent {
   static getDerivedStateFromProps (nextProps, prevState) {
     const { height: optionHeight = 35 } = nextProps.getStyles('option', nextProps);
 
-    if (nextProps.children !== prevState.children) {
-      const children = React.Children.toArray(nextProps.children);
-
+    if (nextProps.children !== prevState.children || nextProps.children.length === 1) {
       const { getStyles } = nextProps;
+
+      const head = nextProps.children[0] || {};
+      const {
+        props: {
+          data: {
+            options = []
+          } = {},
+        } = {},
+      } = head;
+      const groupedChildrenLength = options.length;
+      const isGrouped = groupedChildrenLength > 0;
+      const flattenedChildren = isGrouped && flattenChildren(nextProps.children);
+
+      const children = isGrouped
+        ? React.Children.toArray(flattenedChildren)
+        : React.Children.toArray(nextProps.children);
 
       // calc option height
       const heights = children.map((option = {}) => {
-        const {
-          props: {
-            isFocused,
-            data: {
-              options = [],
-            } = {},
-          } = {},
-        } = option;
+        if (isGrouped) {
+          const {
+            props: {
+              type,
+            } = {}
+          } = option;
 
-        if (options.length > 0) {
-          let {
-            height: groupHeight,
-            marginBottom: groupMarginBottom,
-            marginTop: groupMarginTop,
-            paddingBottom: groupPaddingBottom,
-            paddingTop: groupPaddingTop,
-          } = getStyles('group', nextProps);
+          if (type === 'group') {
+            let {
+              height: groupHeight,
+              marginBottom: groupMarginBottom,
+              marginTop: groupMarginTop,
+              paddingBottom: groupPaddingBottom,
+              paddingTop: groupPaddingTop,
+            } = getStyles('group', nextProps);
 
-          let {
-            height: groupHeadingHeight,
-            marginBottom: groupHeadingMarginBottom,
-            marginTop:  groupHeadingMarginTop,
-            paddingBottom: groupHeadingPaddingBottom,
-            paddingTop: groupHeadingPaddingTop,
-          } = getStyles('groupHeading', nextProps);
+            groupHeight = coerceToNum(groupHeight);
+            groupMarginBottom = coerceToNum(groupMarginBottom);
+            groupMarginTop = coerceToNum(groupMarginTop);
+            groupPaddingBottom = coerceToNum(groupPaddingBottom);
+            groupPaddingTop = coerceToNum(groupPaddingTop);
 
+            let {
+              height: groupHeadingHeight,
+              marginBottom: groupHeadingMarginBottom,
+              marginTop:  groupHeadingMarginTop,
+              paddingBottom: groupHeadingPaddingBottom,
+              paddingTop: groupHeadingPaddingTop,
+            } = getStyles('groupHeading', nextProps);
 
-          groupHeight = coerceToNum(groupHeight);
-          groupMarginBottom = coerceToNum(groupMarginBottom);
-          groupMarginTop = coerceToNum(groupMarginTop);
-          groupPaddingBottom = coerceToNum(groupPaddingBottom);
-          groupPaddingTop = coerceToNum(groupPaddingTop);
+            groupHeadingHeight = coerceToNum(groupHeadingHeight) || 15;
+            groupHeadingMarginBottom = coerceToNum(groupHeadingMarginBottom);
+            groupHeadingMarginTop = coerceToNum(groupHeadingMarginTop);
+            groupHeadingPaddingBottom = coerceToNum(groupHeadingPaddingBottom);
+            groupHeadingPaddingTop = coerceToNum(groupHeadingPaddingTop);
 
-          groupHeadingHeight = coerceToNum(groupHeadingHeight);
-          groupHeadingMarginBottom = coerceToNum(groupHeadingMarginBottom);
-          groupHeadingPaddingBottom = coerceToNum(groupHeadingPaddingBottom);
-          groupHeadingPaddingTop = coerceToNum(groupHeadingPaddingTop);
+            return (groupHeight || (groupPaddingBottom + groupPaddingTop))
+              + groupMarginBottom
+              + groupMarginTop
 
-
-          return options.length * optionHeight
-            + (groupHeight || (groupPaddingBottom + groupPaddingTop))
-            + groupMarginBottom
-            + groupMarginTop
-
-            + groupHeadingHeight || (groupHeadingPaddingBottom + groupHeadingPaddingTop)
-            + groupHeadingMarginBottom
-            + groupHeadingMarginTop
+              + groupHeadingHeight || (groupHeadingPaddingBottom + groupHeadingPaddingTop)
+              + groupHeadingMarginBottom
+              + groupHeadingMarginTop
+          }
         }
 
         return optionHeight;
       });
 
-      const focusedIndex = children.findIndex(({ props: { isFocused } = {} }) => isFocused);
+      // find focused item
+      const isFocusedPredicate = ({ props: { isFocused } = {} }) => isFocused;
+      const focusedIndex = children.findIndex(isFocusedPredicate);
       const currentIndex = Math.max(focusedIndex, 0);
 
       const itemCount = children.length;
@@ -109,7 +143,7 @@ class MenuList extends React.PureComponent {
       const estimatedItemSize = Math.floor(totalHeight / itemCount);
 
       return {
-        children: nextProps.children,
+        children,
         currentIndex,
         estimatedItemSize,
         heights,
@@ -123,6 +157,11 @@ class MenuList extends React.PureComponent {
 
   componentDidUpdate() {
     const { currentIndex } = this.state;
+    const { closeMenuOnSelect, isMulti } = this.props.selectProps;
+    if (closeMenuOnSelect === false && isMulti === true) {
+      return;
+    }
+
     this.list.current.scrollToItem(currentIndex);
   }
 
@@ -131,9 +170,8 @@ class MenuList extends React.PureComponent {
   }
 
   render() {
-    const { children: rawChildren, getStyles, innerRef } = this.props;
-    const { estimatedItemSize, menuHeight, itemCount } = this.state;
-    const children = React.Children.toArray(rawChildren);
+    const { getStyles, innerRef } = this.props;
+    const { children: stateChildren, estimatedItemSize, menuHeight, itemCount } = this.state;
 
     const { maxHeight, ...menuListStyle } = getStyles('menuList', this.props);
 
@@ -145,9 +183,9 @@ class MenuList extends React.PureComponent {
           height={menuHeight}
           itemCount={itemCount}
           itemSize={this.getItemSize}
-          itemData={children}
+          itemData={stateChildren}
         >
-          {OptionWrapper}
+          {ItemWrapper}
         </List>
       </div>
     );

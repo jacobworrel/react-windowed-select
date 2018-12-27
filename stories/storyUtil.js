@@ -10,7 +10,7 @@ export const options5000 = createOptions(R.range(1, 5001));
 export const options10000 = createOptions(R.range(1, 10001));
 
 export const groupedOptions = [
-  { label: `Group 1`, options: createOptions(R.range(1, 4)) },
-  { label: `Group 2`, options: createOptions(R.range(4, 7)) },
-  { label: `Group 3`, options: createOptions(R.range(7, 10)) },
+  { label: `Group 1`, options: createOptions(R.range(1, 11)) },
+  { label: `Group 2`, options: createOptions(R.range(11, 21)) },
+  { label: `Group 3`, options: createOptions(R.range(21, 31)) },
 ];
