@@ -156,10 +156,6 @@ class MenuList extends React.PureComponent {
 
   componentDidUpdate() {
     const { currentIndex } = this.state;
-    const { closeMenuOnSelect, isMulti } = this.props.selectProps;
-    if (closeMenuOnSelect === false && isMulti === true) {
-      return;
-    }
 
     if (this.state.children.length === 1) {
       this.list.current.resetAfterIndex(0);
