@@ -3,32 +3,31 @@ import React from 'react';
 import { VariableSizeList as List } from 'react-window';
 
 const coerceToNum = x => {
-  if (typeof x !== 'number' && typeof x !== 'undefined') {
-    console.warn(`${x} is not a number. Please use numeric values.`);
-  }
   if (typeof x !== 'number') {
     return 0;
   }
   return x;
 };
 
-const flattenChildren = children => children.reduce((result, child) => {
-  const {
-    props: {
-      children: nestedChildren = [],
-    } = {},
-  } = child;
+const flattenChildren = children => {
+  return children.reduce((result, child) => {
+    const {
+      props: {
+        children: nestedChildren = [],
+      } = {},
+    } = child;
 
-  return [
-    ...result,
-    React.cloneElement(
-      child,
-      { type: 'group' },
-      []
-    ),
-    ...nestedChildren,
-  ];
-}, []);
+    return [
+      ...result,
+      React.cloneElement(
+        child,
+        { type: 'group' },
+        []
+      ),
+      ...nestedChildren,
+    ];
+  }, []);
+};
 
 class ItemWrapper extends React.PureComponent {
   render() {
@@ -58,7 +57,7 @@ class MenuList extends React.PureComponent {
   static getDerivedStateFromProps (nextProps, prevState) {
     const { height: optionHeight = 35 } = nextProps.getStyles('option', nextProps);
 
-    if (nextProps.children !== prevState.children || nextProps.children.length === 1) {
+    if (nextProps.children !== prevState.children) {
       const { getStyles } = nextProps;
 
       const head = nextProps.children[0] || {};
@@ -109,7 +108,7 @@ class MenuList extends React.PureComponent {
               paddingTop: groupHeadingPaddingTop,
             } = getStyles('groupHeading', nextProps);
 
-            groupHeadingHeight = coerceToNum(groupHeadingHeight) || 15;
+            groupHeadingHeight = coerceToNum(groupHeadingHeight);
             groupHeadingMarginBottom = coerceToNum(groupHeadingMarginBottom);
             groupHeadingMarginTop = coerceToNum(groupHeadingMarginTop);
             groupHeadingPaddingBottom = coerceToNum(groupHeadingPaddingBottom);
@@ -162,6 +161,10 @@ class MenuList extends React.PureComponent {
       return;
     }
 
+    if (this.state.children.length === 1) {
+      this.list.current.resetAfterIndex(0);
+    }
+
     this.list.current.scrollToItem(currentIndex);
   }
 
@@ -182,8 +185,8 @@ class MenuList extends React.PureComponent {
           estimatedItemSize={estimatedItemSize}
           height={menuHeight}
           itemCount={itemCount}
-          itemSize={this.getItemSize}
           itemData={stateChildren}
+          itemSize={this.getItemSize}
         >
           {ItemWrapper}
         </List>

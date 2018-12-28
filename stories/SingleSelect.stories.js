@@ -43,16 +43,14 @@ storiesOf('Single Select', module)
       options={groupedOptions}
       windowThreshold={0}
       styles={{
-        // group: (base) => ({
-        //   paddingBottom: 20,
-        //   paddingTop: 20,
-        //   marginBottom: 20,
-        //   marginTop: 20,
-        //   border: '20px solid black',
-        // }),
+        group: (base) => ({
+          paddingBottom: 0,
+          paddingTop: 0,
+
+        }),
         groupHeading: (base) => ({
           ...base,
-          // height: 20,
+          height: 100,
         }),
       }}
     />
