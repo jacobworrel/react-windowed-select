@@ -16,37 +16,26 @@ npm install react-windowed-select
 Then use it in your app:
 
 ```javascript
-import React from 'react';
-import WindowedSelect from 'react-windowed-select';
+import React from "react";
+import WindowedSelect from "react-windowed-select";
 
-const options = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' }
-];
+const options = [];
+
+for (let i = 0; i < 10000; i += 1) {
+  options.push({
+    label: `Option ${i}`,
+    value: i
+  });
+}
 
 class App extends React.Component {
-  state = {
-    selectedOption: null,
-  }
-  handleChange = (selectedOption) => {
-    this.setState({ selectedOption });
-    console.log(`Option selected:`, selectedOption);
-  }
   render() {
-    const { selectedOption } = this.state;
-
-    return (
-      <WindowedSelect
-        value={selectedOption}
-        onChange={this.handleChange}
-        options={options}
-        windowThreshold={1}
-      />
-    );
+    return <WindowedSelect options={options} />;
   }
 }
 ```
+[![Edit react-windowed-select](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/n592j4l13m)
+
 
 ## Props
 `react-windowed-select` is just a wrapper around `react-select`. All props passed to the `WindowedSelect` component are passed down to the underlying `Select` component from `react-select`.
