@@ -1,4 +1,4 @@
 import React, {Component} from 'react'
-import WindowSelect from './WindowSelect.js';
+import WindowedSelect from './WindowedSelect.js';
 
-export default WindowSelect;
+export default WindowedSelect;

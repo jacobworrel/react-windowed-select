@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Select from 'react-select';
 
-class WindowSelect extends React.Component {
+class WindowedSelect extends React.Component {
   render () {
     const {
       options,
@@ -26,9 +26,9 @@ class WindowSelect extends React.Component {
   }
 }
 
-WindowSelect.propTypes = {};
-WindowSelect.defaultProps = {
+WindowedSelect.propTypes = {};
+WindowedSelect.defaultProps = {
   windowThreshold: 100,
 };
 
-export default WindowSelect;
+export default WindowedSelect;

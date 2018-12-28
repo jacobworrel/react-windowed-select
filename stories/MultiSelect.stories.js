@@ -2,7 +2,7 @@ import React from 'react';
 
 import { storiesOf } from '@storybook/react';
 
-import WindowSelect from '../src';
+import WindowedSelect from '../src';
 import * as su from './storyUtil';
 import * as R from 'ramda';
 
@@ -12,20 +12,20 @@ import { options200 } from './storyUtil';
 import { groupedOptions } from './storyUtil';
 
 storiesOf('Multi Select', module)
-.add('non-windowed - 50 options', () => <WindowSelect options={options50} menuIsOpen isMulti />)
-.add('non-windowed - grouped', () => <WindowSelect options={groupedOptions} menuIsOpen isMulti />)
+.add('non-windowed - 50 options', () => <WindowedSelect options={options50} menuIsOpen isMulti />)
+.add('non-windowed - grouped', () => <WindowedSelect options={groupedOptions} menuIsOpen isMulti />)
 .add('windowed - 1 option', () => (
-  <WindowSelect options={options1} menuIsOpen windowThreshold={0} isMulti />
+  <WindowedSelect options={options1} menuIsOpen windowThreshold={0} isMulti />
 ))
 .add('windowed - 200 options', () => (
-  <WindowSelect options={options200} isMulti/>
+  <WindowedSelect options={options200} isMulti/>
 ))
 .add('windowed - no scroll to top when closeMenuOnSelect === false', () => (
-  <WindowSelect options={options200} isMulti closeMenuOnSelect={false}/>
+  <WindowedSelect options={options200} isMulti closeMenuOnSelect={false}/>
 ))
-.add('windowed - grouped', () => <WindowSelect options={groupedOptions} menuIsOpen windowThreshold={0} isMulti />)
+.add('windowed - grouped', () => <WindowedSelect options={groupedOptions} menuIsOpen windowThreshold={0} isMulti />)
 .add('windowed - custom styles', () => (
-  <WindowSelect
+  <WindowedSelect
     menuIsOpen
     isMulti
     options={options200}
@@ -43,7 +43,7 @@ storiesOf('Multi Select', module)
   />
 ))
 .add('windowed - custom styles & grouped', () => (
-  <WindowSelect
+  <WindowedSelect
     menuIsOpen
     isMulti
     options={groupedOptions}

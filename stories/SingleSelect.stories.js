@@ -2,7 +2,7 @@ import React from 'react';
 
 import { storiesOf } from '@storybook/react';
 
-import WindowSelect from '../src';
+import WindowedSelect from '../src';
 
 import { options1 } from './storyUtil';
 import { options50 } from './storyUtil';
@@ -10,18 +10,18 @@ import { options200 } from './storyUtil';
 import { groupedOptions } from './storyUtil';
 
 storiesOf('Single Select', module)
-  .add('non-windowed - 50 options', () => <WindowSelect options={options50} menuIsOpen />)
-  .add('non-windowed - grouped', () => <WindowSelect options={groupedOptions} menuIsOpen />)
+  .add('non-windowed - 50 options', () => <WindowedSelect options={options50} menuIsOpen />)
+  .add('non-windowed - grouped', () => <WindowedSelect options={groupedOptions} menuIsOpen />)
   .add('windowed - 1 option', () => (
-    <WindowSelect options={options1} menuIsOpen windowThreshold={0} />
+    <WindowedSelect options={options1} menuIsOpen windowThreshold={0} />
   ))
 .add('windowed - 200 options', () => (
-  <WindowSelect options={options200} menuIsOpen />
+  <WindowedSelect options={options200} menuIsOpen />
 ))
-  .add('windowed - grouped', () => <WindowSelect options={groupedOptions} menuIsOpen windowThreshold={0} />)
-  .add('windowed - no options', () => <WindowSelect options={[]} menuIsOpen windowThreshold={0} />)
+  .add('windowed - grouped', () => <WindowedSelect options={groupedOptions} menuIsOpen windowThreshold={0} />)
+  .add('windowed - no options', () => <WindowedSelect options={[]} menuIsOpen windowThreshold={0} />)
   .add('windowed - custom styles', () => (
-    <WindowSelect
+    <WindowedSelect
       menuIsOpen
       options={options200}
       styles={{
@@ -38,7 +38,7 @@ storiesOf('Single Select', module)
     />
   ))
   .add('windowed - custom styles & grouped', () => (
-    <WindowSelect
+    <WindowedSelect
       menuIsOpen
       options={groupedOptions}
       windowThreshold={0}
