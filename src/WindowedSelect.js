@@ -10,13 +10,13 @@ class WindowedSelect extends React.Component {
       windowThreshold,
     } = this.props;
 
-    const isWindow = options.length >= windowThreshold;
+    const isWindowed = options.length >= windowThreshold;
     return (
       <Select {...this.props}
         components={{
           ...this.props.components,
           ...(
-            isWindow
+            isWindowed
               ? { MenuList }
               : {}
           )
