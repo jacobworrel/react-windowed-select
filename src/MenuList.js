@@ -197,6 +197,5 @@ MenuList.propTypes = {
   getValue: PropTypes.func,
   options: PropTypes.array,
 };
-MenuList.defaultProps = {};
 
 export default MenuList;

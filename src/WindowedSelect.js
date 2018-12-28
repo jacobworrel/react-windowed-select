@@ -1,5 +1,4 @@
 import MenuList from './MenuList.js';
-import PropTypes from 'prop-types';
 import React from 'react';
 import Select from 'react-select';
 
@@ -26,7 +25,6 @@ class WindowedSelect extends React.Component {
   }
 }
 
-WindowedSelect.propTypes = {};
 WindowedSelect.defaultProps = {
   windowThreshold: 100,
 };
