@@ -3,9 +3,6 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 
 import WindowedSelect from '../src';
-import * as su from './storyUtil';
-import * as R from 'ramda';
-
 import { options1 } from './storyUtil';
 import { options50 } from './storyUtil';
 import { options200 } from './storyUtil';

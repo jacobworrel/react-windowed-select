@@ -27,6 +27,7 @@ class WindowedSelect extends React.Component {
 
 WindowedSelect.defaultProps = {
   windowThreshold: 100,
+  options: [],
 };
 
 export default WindowedSelect;

@@ -14,11 +14,11 @@
     "clean": "nwb clean-module && nwb clean-demo",
     "prepublishOnly": "npm run build",
     "start": "nwb serve-react-demo",
-    "test": "nwb test-react",
-    "test:coverage": "nwb test-react --coverage",
-    "test:watch": "nwb test-react --server",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "test": "jest",
+    "test:coverage": "npm test --coverage",
+    "test:watch": "npm test --server"
   },
   "dependencies": {
     "prop-types": "15.6.2",
@@ -29,17 +29,35 @@
     "react": "16.x"
   },
   "devDependencies": {
+    "@babel/core": "7.2.2",
+    "@storybook/addon-actions": "4.1.2",
+    "@storybook/addon-links": "4.1.2",
+    "@storybook/addons": "4.1.2",
+    "@storybook/react": "4.1.2",
+    "babel-jest": "23.6.0",
+    "babel-loader": "8.0.4",
+    "babel-preset-es2015": "6.24.1",
+    "babel-preset-react": "6.24.1",
+    "chai": "4.2.0",
+    "enzyme": "3.8.0",
+    "enzyme-adapter-react-16": "1.7.1",
+    "enzyme-to-json": "3.3.5",
+    "jest": "23.6.0",
+    "jest-dom": "3.0.0",
+    "jest-in-case": "1.0.2",
     "nwb": "0.23.x",
     "ramda": "0.26.1",
     "react": "16.6.3",
     "react-dom": "16.6.3",
-    "styled-components": "4.1.2",
-    "@storybook/react": "4.1.2",
-    "@storybook/addon-actions": "4.1.2",
-    "@storybook/addon-links": "4.1.2",
-    "@storybook/addons": "4.1.2",
-    "@babel/core": "7.2.2",
-    "babel-loader": "8.0.4"
+    "react-test-renderer": "16.7.0"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "coverageReporters": ["json", "html"],
+    "setupTestFrameworkScriptFile": "<rootDir>/tests/setupTests.js",
+    "transform": {
+      "^.+\\.js$": "<rootDir>/jest.transform.js"
+    }
   },
   "author": "",
   "homepage": "",
