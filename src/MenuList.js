@@ -1,7 +1,11 @@
+import {
+  coerceToNum,
+  flattenGroupedChildren,
+  getCurrentIndex,
+} from './util';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { VariableSizeList as List } from 'react-window';
-import { coerceToNum, flattenGroupedChildren } from './util';
 
 class ItemWrapper extends React.PureComponent {
   render() {
@@ -102,18 +106,15 @@ class MenuList extends React.PureComponent {
         return optionHeight;
       });
 
-      // find focused item
-      const isFocusedPredicate = ({ props: { isFocused } = {} }) => isFocused;
-      const focusedIndex = children.findIndex(isFocusedPredicate);
-      const currentIndex = Math.max(focusedIndex, 0);
+      const currentIndex = getCurrentIndex(children);
 
       // todo: Use React.children.count()
       const itemCount = children.length;
 
       // calc menu height
       const sum = (a, b) => a + b;
-      const { maxHeight } = getStyles('menuList', nextProps);
       const totalHeight = heights.reduce(sum, 0);
+      const { maxHeight } = getStyles('menuList', nextProps);
       const menuHeight = Math.min(maxHeight, totalHeight);
       const estimatedItemSize = Math.floor(totalHeight / itemCount);
 

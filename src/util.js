@@ -26,3 +26,10 @@ export const flattenGroupedChildren = children => {
     ];
   }, []);
 };
+
+export const isFocused = ({ props: { isFocused } = {} }) => isFocused === true;
+
+export const getCurrentIndex = children => Math.max(
+  children.findIndex(isFocused),
+  0
+);
