@@ -7,7 +7,7 @@ import WindowedSelect from '../src/WindowedSelect';
 
 const { MenuList } = components;
 
-describe.only('WindowedSelect', () => {
+describe('WindowedSelect', () => {
   test('sets default props', () => {
     const selectWrapper = shallow(<WindowedSelect />);
 

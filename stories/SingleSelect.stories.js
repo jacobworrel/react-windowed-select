@@ -28,7 +28,7 @@ storiesOf('Single Select', module)
         option: (base) => ({
           ...base,
           fontSize: 20,
-          height: 40,
+          padding: 50,
         }),
         menuList: (base) => ({
           ...base,

@@ -1,33 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { VariableSizeList as List } from 'react-window';
-
-const coerceToNum = x => {
-  if (typeof x !== 'number') {
-    return 0;
-  }
-  return x;
-};
-
-const flattenChildren = children => {
-  return children.reduce((result, child) => {
-    const {
-      props: {
-        children: nestedChildren = [],
-      } = {},
-    } = child;
-
-    return [
-      ...result,
-      React.cloneElement(
-        child,
-        { type: 'group' },
-        []
-      ),
-      ...nestedChildren,
-    ];
-  }, []);
-};
+import { coerceToNum, flattenGroupedChildren } from './util';
 
 class ItemWrapper extends React.PureComponent {
   render() {
@@ -70,8 +44,9 @@ class MenuList extends React.PureComponent {
       } = head;
       const groupedChildrenLength = options.length;
       const isGrouped = groupedChildrenLength > 0;
-      const flattenedChildren = isGrouped && flattenChildren(nextProps.children);
+      const flattenedChildren = isGrouped && flattenGroupedChildren(nextProps.children);
 
+      // todo: move branching logic below and use React.Children.map
       const children = isGrouped
         ? React.Children.toArray(flattenedChildren)
         : React.Children.toArray(nextProps.children);
@@ -132,6 +107,7 @@ class MenuList extends React.PureComponent {
       const focusedIndex = children.findIndex(isFocusedPredicate);
       const currentIndex = Math.max(focusedIndex, 0);
 
+      // todo: Use React.children.count()
       const itemCount = children.length;
 
       // calc menu height
