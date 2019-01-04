@@ -10,16 +10,43 @@ import { options200 } from './storyUtil';
 import { groupedOptions } from './storyUtil';
 
 storiesOf('Single Select', module)
-  .add('non-windowed - 50 options', () => <WindowedSelect options={options50} menuIsOpen />)
-  .add('non-windowed - grouped', () => <WindowedSelect options={groupedOptions} menuIsOpen />)
+  .add('non-windowed - 50 options', () =>
+    <WindowedSelect
+      options={options50}
+      menuIsOpen
+    />
+  )
+  .add('non-windowed - grouped', () => (
+    <WindowedSelect
+      options={groupedOptions}
+      menuIsOpen
+    />))
   .add('windowed - 1 option', () => (
-    <WindowedSelect options={options1} menuIsOpen windowThreshold={0} />
+    <WindowedSelect
+      options={options1}
+      menuIsOpen
+      windowThreshold={0}
+      noOptionsMessage={() => "Hello"}
+    />
   ))
 .add('windowed - 200 options', () => (
-  <WindowedSelect options={options200} menuIsOpen />
+  <WindowedSelect
+    options={options200}
+    menuIsOpen
+  />
 ))
-  .add('windowed - grouped', () => <WindowedSelect options={groupedOptions} menuIsOpen windowThreshold={0} />)
-  .add('windowed - no options', () => <WindowedSelect options={[]} menuIsOpen windowThreshold={0} />)
+  .add('windowed - grouped', () => (
+    <WindowedSelect
+      options={groupedOptions}
+      menuIsOpen
+      windowThreshold={0}
+    />))
+  .add('windowed - no options', () => (
+    <WindowedSelect
+      options={[]}
+      menuIsOpen
+      windowThreshold={0} />
+  ))
   .add('windowed - custom styles', () => (
     <WindowedSelect
       menuIsOpen
@@ -28,7 +55,9 @@ storiesOf('Single Select', module)
         option: (base) => ({
           ...base,
           fontSize: 20,
-          padding: 50,
+          height: 60,
+          padding: '10px 12px',
+          margin: '10px 0px',
         }),
         menuList: (base) => ({
           ...base,

@@ -20,7 +20,13 @@ storiesOf('Multi Select', module)
 .add('windowed - no scroll to top when closeMenuOnSelect === false', () => (
   <WindowedSelect options={options200} isMulti closeMenuOnSelect={false}/>
 ))
-.add('windowed - grouped', () => <WindowedSelect options={groupedOptions} menuIsOpen windowThreshold={0} isMulti />)
+.add('windowed - grouped', () => (
+  <WindowedSelect
+    options={groupedOptions}
+    menuIsOpen
+    windowThreshold={0}
+    isMulti />
+))
 .add('windowed - custom styles', () => (
   <WindowedSelect
     menuIsOpen
@@ -46,14 +52,9 @@ storiesOf('Multi Select', module)
     options={groupedOptions}
     windowThreshold={0}
     styles={{
-      group: (base) => ({
-        paddingBottom: 20,
-        paddingTop: 20,
-        border: '50px solid black',
-      }),
       groupHeading: (base) => ({
         ...base,
-        // height: 50,
+        height: 100,
       }),
       option: (base) => ({
         ...base,

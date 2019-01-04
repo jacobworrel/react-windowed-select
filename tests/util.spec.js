@@ -1,5 +1,4 @@
 import {
-  coerceToNum,
   flattenGroupedChildren,
   getCurrentIndex,
   isFocused,
@@ -7,15 +6,6 @@ import {
 import React from 'react';
 
 describe(`util`, () => {
-  describe(`coerceToNum`, () => {
-    test(`returns 0 when input is not a number`, () => {
-      expect(coerceToNum('100%')).toEqual(0);
-    });
-
-    test(`noops when input is a number`, () => {
-      expect(coerceToNum(1)).toEqual(1);
-    });
-  });
   describe(`flattenGroupedChildren`, () => {
     const TestOption = React.createElement('div', { key: 'key' });
     const TestGroup = React.createElement(
@@ -55,7 +45,7 @@ describe(`util`, () => {
       expect(getCurrentIndex(children)).toEqual(0);
     });
   });
-  describe.only(`isFocused`, () => {
+  describe(`isFocused`, () => {
     test(`returns true when isFocused is true`, () => {
       const item = {
         props: {

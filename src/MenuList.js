@@ -1,5 +1,5 @@
 import {
-  coerceToNum,
+  createGetHeight,
   flattenGroupedChildren,
   getCurrentIndex,
 } from './util';
@@ -33,12 +33,11 @@ class MenuList extends React.PureComponent {
   }
 
   static getDerivedStateFromProps (nextProps, prevState) {
-    const { height: optionHeight = 35 } = nextProps.getStyles('option', nextProps);
-
     if (nextProps.children !== prevState.children) {
       const { getStyles } = nextProps;
+      let children = React.Children.toArray(nextProps.children);
 
-      const head = nextProps.children[0] || {};
+      const head = children[0] || {};
       const {
         props: {
           data: {
@@ -48,67 +47,25 @@ class MenuList extends React.PureComponent {
       } = head;
       const groupedChildrenLength = options.length;
       const isGrouped = groupedChildrenLength > 0;
-      const flattenedChildren = isGrouped && flattenGroupedChildren(nextProps.children);
+      const flattenedChildren = isGrouped && flattenGroupedChildren(children);
 
-      // todo: move branching logic below and use React.Children.map
-      const children = isGrouped
-        ? React.Children.toArray(flattenedChildren)
-        : React.Children.toArray(nextProps.children);
+      children = isGrouped
+        ? flattenedChildren
+        : children;
 
-      // calc option height
-      const heights = children.map((option = {}) => {
-        if (isGrouped) {
-          const {
-            props: {
-              type,
-            } = {}
-          } = option;
-
-          if (type === 'group') {
-            let {
-              height: groupHeight,
-              marginBottom: groupMarginBottom,
-              marginTop: groupMarginTop,
-              paddingBottom: groupPaddingBottom,
-              paddingTop: groupPaddingTop,
-            } = getStyles('group', nextProps);
-
-            groupHeight = coerceToNum(groupHeight);
-            groupMarginBottom = coerceToNum(groupMarginBottom);
-            groupMarginTop = coerceToNum(groupMarginTop);
-            groupPaddingBottom = coerceToNum(groupPaddingBottom);
-            groupPaddingTop = coerceToNum(groupPaddingTop);
-
-            let {
-              height: groupHeadingHeight,
-              marginBottom: groupHeadingMarginBottom,
-              marginTop:  groupHeadingMarginTop,
-              paddingBottom: groupHeadingPaddingBottom,
-              paddingTop: groupHeadingPaddingTop,
-            } = getStyles('groupHeading', nextProps);
-
-            groupHeadingHeight = coerceToNum(groupHeadingHeight);
-            groupHeadingMarginBottom = coerceToNum(groupHeadingMarginBottom);
-            groupHeadingMarginTop = coerceToNum(groupHeadingMarginTop);
-            groupHeadingPaddingBottom = coerceToNum(groupHeadingPaddingBottom);
-            groupHeadingPaddingTop = coerceToNum(groupHeadingPaddingTop);
-
-            return (groupHeight || (groupPaddingBottom + groupPaddingTop))
-              + groupMarginBottom
-              + groupMarginTop
-
-              + groupHeadingHeight || (groupHeadingPaddingBottom + groupHeadingPaddingTop)
-              + groupHeadingMarginBottom
-              + groupHeadingMarginTop
-          }
-        }
-
-        return optionHeight;
+      const groupHeadingStyles = getStyles('groupHeading', nextProps);
+      const noOptionsMsgStyles = getStyles('noOptionsMessage', nextProps);
+      const optionStyles = getStyles('option', nextProps);
+      const getHeight = createGetHeight({
+        groupHeadingStyles,
+        noOptionsMsgStyles,
+        optionStyles,
       });
+
+      const heights = children.map(getHeight);
 
       const currentIndex = getCurrentIndex(children);
 
-      // todo: Use React.children.count()
       const itemCount = children.length;
 
       // calc menu height
@@ -165,7 +122,6 @@ class MenuList extends React.PureComponent {
         </List>
       </div>
     );
-
   }
 }
 
