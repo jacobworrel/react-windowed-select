@@ -9,6 +9,7 @@ An integration of `react-window` with `react-select` v2 to efficiently render la
 ## Installation and Usage
 
 The easiest way to use `react-windowed-select` is to install it from npm:
+
 ```
 npm install react-windowed-select
 ```
@@ -34,22 +35,49 @@ class App extends React.Component {
   }
 }
 ```
+
 [![Edit react-windowed-select](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/n592j4l13m)
 
 
 ## Props
-`react-windowed-select` is just a wrapper around `react-select`. All props passed to the `WindowedSelect` component are passed down to the underlying `Select` component from `react-select`.
 
-See [react-select.com](https://www.react-select.com) for live demos and comprehensive docs on how to use this component.
-
-## Additional Props
+`react-windowed-select` is just a wrapper around `react-select`.
+All props passed to the `WindowedSelect` component are forwarded to the underlying `Select` component from `react-select`.
 
 ### windowThreshold | default = 100
 
 The number of options beyond which the menu will be windowed.
 
-## Known Limitations
-In order to support proper scrolling and focus behavior, grouped options are flattened. This changes the component hierarchy within `MenuList` in the following way:
+## Custom Styles
+
+You can still use the [styles API](https://www.react-select.com/styles) from `react-select` v2 to customize how your Select component looks.
+The height property of the `Option`, `GroupHeading` and/or `NoOptionsMessage` components is used to determine the total height of the windowed menu and the following defaults are provided:
+
+|Component         |Default Height|
+|------------------|--------------|
+|`Option`          |35px          |
+|`GroupHeading`    |25px          |
+|`NoOptionsMessage`|35px          |
+
+To override these values, use the `styles` prop like you would with a regular `react-select` component.
+
+```javascript
+<WindowedSelect
+  options={options}
+  styles={{
+    option: (base) => ({
+      ...base,
+      height: 60,
+      padding: '20px 12px',
+    }),
+  }}
+/>
+```
+
+## Grouped Options
+
+Grouped options are not fully supported.
+In order to ensure proper scrolling and focus behavior, options nested inside the `Group` component are flattened. This changes the component structure within `MenuList` in the following way:
 
 ```
 MenuList  
@@ -63,11 +91,11 @@ MenuList
 └───Option 2
 ```
 
-[build-badge]: https://img.shields.io/travis/user/repo/master.png?style=flat-square
-[build]: https://travis-ci.org/user/repo
+[build-badge]: https://img.shields.io/travis/jacobworrel/react-windowed-select/master.png?style=flat-square
+[build]: https://travis-ci.org/jacobworrel/react-windowed-select
 
 [npm-badge]: https://img.shields.io/npm/v/react-windowed-select.png?style=flat-square
 [npm]: https://www.npmjs.com/package/react-windowed-select
 
-[coveralls-badge]: https://img.shields.io/coveralls/user/repo/master.png?style=flat-square
-[coveralls]: https://coveralls.io/github/user/repo
+[coveralls-badge]: https://img.shields.io/coveralls/jacobworrel/react-windowed-select/master.png?style=flat-square
+[coveralls]: https://coveralls.io/github/jacobworrel/react-windowed-select
