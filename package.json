@@ -16,9 +16,8 @@
     "start": "nwb serve-react-demo",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "test": "jest",
-    "test:coverage": "npm test --coverage",
-    "test:watch": "npm test --server"
+    "test": "jest --coverage",
+    "test:watch": "jest --watchAll"
   },
   "dependencies": {
     "prop-types": "15.6.2",
@@ -52,8 +51,10 @@
     "react-test-renderer": "16.7.0"
   },
   "jest": {
-    "collectCoverage": true,
-    "coverageReporters": ["json", "html", "lcov"],
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/node_modules/",
+      "<rootDir>/tests/"
+    ],
     "coverageThreshold": {
       "global": {
         "branches": 60,
