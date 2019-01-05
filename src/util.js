@@ -39,7 +39,7 @@ export function createGetHeight ({ groupHeadingStyles, noOptionsMsgStyles, optio
         children,
         selectProps: {
           noOptionsMessage,
-        },
+        } = {},
       } = {}
     } = child;
 
@@ -51,8 +51,8 @@ export function createGetHeight ({ groupHeadingStyles, noOptionsMsgStyles, optio
       const { height = 35 } = optionStyles;
       return height;
     }
-    else if (children === noOptionsMessage()) {
-      const { height = 35 } = noOptionsMessageStyles;
+    else if (typeof noOptionsMessage === 'function' && children === noOptionsMessage()) {
+      const { height = 35 } = noOptionsMsgStyles;
       return height;
     }
     else {
