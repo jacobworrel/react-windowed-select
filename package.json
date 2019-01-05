@@ -53,7 +53,15 @@
   },
   "jest": {
     "collectCoverage": true,
-    "coverageReporters": ["json", "html"],
+    "coverageReporters": ["json", "html", "text-lcov"],
+    "coverageThreshold": {
+      "global": {
+        "branches": 60,
+        "functions": 90,
+        "lines": 90,
+        "statements": 90
+      }
+    },
     "setupTestFrameworkScriptFile": "<rootDir>/tests/setupTests.js",
     "transform": {
       "^.+\\.js$": "<rootDir>/jest.transform.js"
