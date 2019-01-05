@@ -53,7 +53,7 @@
   },
   "jest": {
     "collectCoverage": true,
-    "coverageReporters": ["json", "html", "text-lcov"],
+    "coverageReporters": ["json", "html", "lcov"],
     "coverageThreshold": {
       "global": {
         "branches": 60,
