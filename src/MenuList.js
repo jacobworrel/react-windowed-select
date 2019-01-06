@@ -91,6 +91,11 @@ class MenuList extends React.PureComponent {
   componentDidUpdate() {
     const { currentIndex } = this.state;
 
+    // prevents menu from scrolling to top if menu remains open after selecting item
+    if (currentIndex <= 1) {
+      return;
+    }
+
     if (this.state.children.length === 1) {
       this.list.current.resetAfterIndex(0);
     }
