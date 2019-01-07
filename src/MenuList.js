@@ -20,7 +20,7 @@ class MenuList extends React.PureComponent {
   constructor (props) {
     super(props);
 
-    this.list = React.createRef();
+    this.setListRef = this.setListRef.bind(this);
     this.getItemSize = this.getItemSize.bind(this);
 
     this.state = {
@@ -92,7 +92,7 @@ class MenuList extends React.PureComponent {
     const { currentIndex } = this.state;
 
     if (this.state.children.length === 1) {
-      this.list.current.resetAfterIndex(0);
+      this.list.resetAfterIndex(0);
     }
 
     /**
@@ -102,12 +102,16 @@ class MenuList extends React.PureComponent {
      * returning to top of menu when it remains open after selecting
      */
     if (currentIndex > 1) {
-      this.list.current.scrollToItem(currentIndex);
+      this.list.scrollToItem(currentIndex);
     }
   }
 
   getItemSize (index) {
     return this.state.heights[index];
+  }
+
+  setListRef(ref) {
+    this.list = ref;
   }
 
   render() {
@@ -119,7 +123,7 @@ class MenuList extends React.PureComponent {
     return (
       <div ref={innerRef} style={menuListStyle}>
         <List
-          ref={this.list}
+          ref={this.setListRef}
           estimatedItemSize={estimatedItemSize}
           height={menuHeight}
           itemCount={itemCount}

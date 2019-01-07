@@ -52,13 +52,6 @@ describe(`util`, () => {
     });
 
     test(`returns default height`, () => {
-      // const child = {
-      //   props: {
-      //     selectProps: {
-      //       noOptionsMessage: () => 'No Options',
-      //     },
-      //   }
-      // };
       expect(getHeight({})).toEqual(35);
     });
   });
