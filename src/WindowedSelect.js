@@ -1,6 +1,7 @@
 import MenuList from './MenuList.js';
 import React from 'react';
-import Select from 'react-select';
+import Select from '../../react-select/src';
+// import Select from 'react-select';
 
 class WindowedSelect extends React.Component {
   render () {
@@ -10,6 +11,7 @@ class WindowedSelect extends React.Component {
     } = this.props;
 
     const isWindowed = options.length >= windowThreshold;
+    console.log('in windowed sel')
     return (
       <Select {...this.props}
         components={{
@@ -20,6 +22,7 @@ class WindowedSelect extends React.Component {
               : {}
           )
         }}
+        renderMenu={true}
       />
     );
   }
