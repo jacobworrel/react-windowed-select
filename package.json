@@ -16,8 +16,7 @@
     "start": "nwb serve-react-demo",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "test": "jest",
-    "test:coverage": "jest --coverage",
+    "test": "jest --coverage",
     "test:watch": "jest --watchAll"
   },
   "dependencies": {

@@ -58,6 +58,7 @@ The height property of the `Option`, `GroupHeading` and/or `NoOptionsMessage` co
 |`Option`          |35px          |
 |`GroupHeading`    |25px          |
 |`NoOptionsMessage`|35px          |
+|`LoadingMessage`  |35px          |
 
 To override these values, use the `styles` prop like you would with a regular `react-select` component.
 
