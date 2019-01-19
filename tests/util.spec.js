@@ -11,11 +11,13 @@ describe(`util`, () => {
     const groupHeadingStyles = { height: 0 };
     const optionStyles = { height: 1 };
     const noOptionsMsgStyles = { height: 2 };
+    const loadingMsgStyles = { height: 3 };
 
     const getHeight = createGetHeight({
       groupHeadingStyles,
       optionStyles,
       noOptionsMsgStyles,
+      loadingMsgStyles,
     });
 
     test(`returns group height`, () => {
@@ -51,10 +53,75 @@ describe(`util`, () => {
       expect(getHeight(child)).toEqual(2);
     });
 
+    test(`returns loadingMessage height`, () => {
+      const child = {
+        props: {
+          children: 'Loading...',
+          selectProps: {
+            loadingMessage: () => 'Loading...',
+          },
+        },
+      };
+
+      expect(getHeight(child)).toEqual(3);
+    });
+
     test(`returns default height`, () => {
       expect(getHeight({})).toEqual(35);
     });
+
+    describe(`when no height in custom styles`, () => {
+      const getHeight = createGetHeight({
+        groupHeadingStyles: {},
+        optionStyles: {},
+        noOptionsMsgStyles: {},
+        loadingMsgStyles: {},
+      });
+
+      test(`returns default height when no height in loadingMessage styles`, () => {
+        expect(getHeight({
+          props: {
+            children: 'Loading...',
+            selectProps: {
+              loadingMessage: () => 'Loading...',
+            },
+          },
+        })).toEqual(35);
+      });
+
+      test(`returns default height when no height in noOptionsMessage styles`, () => {
+        expect(getHeight({
+          props: {
+            children: 'No Options',
+            selectProps: {
+              noOptionsMessage: () => 'No Options',
+            },
+          },
+        })).toEqual(35);
+      });
+
+      test(`returns default height when no height in option styles`, () => {
+        expect(getHeight({
+          props: {
+            type: 'option',
+          },
+        })).toEqual(35);
+      });
+
+      test(`returns default height when no height in group styles`, () => {
+        expect(getHeight({
+          props: {
+            type: 'group',
+          },
+        })).toEqual(25);
+      });
+    });
+
+    test(`negative: handles noop`, () => {
+      expect(() => createGetHeight()()).not.toThrow();
+    });
   });
+
   describe(`flattenGroupedChildren`, () => {
     const TestOption = React.createElement('div', { key: 'key' });
     const TestGroup = React.createElement(
@@ -77,6 +144,7 @@ describe(`util`, () => {
       expect(() => flattenGroupedChildren([Test])).not.toThrow();
     });
   });
+
   describe(`getCurrentIndex`, () => {
     test(`returns focused item index when item is focused`, () => {
       const children = [
@@ -94,6 +162,7 @@ describe(`util`, () => {
       expect(getCurrentIndex(children)).toEqual(0);
     });
   });
+
   describe(`isFocused`, () => {
     test(`returns true when isFocused is true`, () => {
       const item = {
@@ -108,6 +177,10 @@ describe(`util`, () => {
       expect(isFocused({ props: { isFocused: false } })).toEqual(false);
 
       expect(isFocused({ props: {} })).toEqual(false);
+    });
+
+    test(`negative: handles noop`, () => {
+      expect(() => isFocused()).not.toThrow();
     });
   });
 });

@@ -47,6 +47,21 @@ storiesOf('Single Select', module)
       menuIsOpen
       windowThreshold={0} />
   ))
+.add('windowed - custom loading message/height', () => (
+  <WindowedSelect
+    options={[]}
+    menuIsOpen
+    windowThreshold={0}
+    loadingMessage={() => 'Loading...'}
+    styles={{
+      loadingMessage: (base) => ({
+        ...base,
+        height: 50,
+      })
+    }}
+    isLoading
+  />
+))
   .add('windowed - custom styles', () => (
     <WindowedSelect
       menuIsOpen

@@ -20,7 +20,7 @@ export function flattenGroupedChildren (children) {
   }, []);
 }
 
-export function isFocused ({ props: { isFocused } = {} }) {
+export function isFocused ({ props: { isFocused } = {} } = {}) {
   return isFocused === true;
 }
 
@@ -31,7 +31,12 @@ export function getCurrentIndex (children) {
   );
 }
 
-export function createGetHeight ({ groupHeadingStyles, noOptionsMsgStyles, optionStyles }) {
+export function createGetHeight ({
+  groupHeadingStyles,
+  noOptionsMsgStyles,
+  optionStyles,
+  loadingMsgStyles,
+} = {}) {
   return function getHeight (child = {}) {
     const {
       props: {
@@ -39,6 +44,7 @@ export function createGetHeight ({ groupHeadingStyles, noOptionsMsgStyles, optio
         children,
         selectProps: {
           noOptionsMessage,
+          loadingMessage,
         } = {},
       } = {}
     } = child;
@@ -53,6 +59,10 @@ export function createGetHeight ({ groupHeadingStyles, noOptionsMsgStyles, optio
     }
     else if (typeof noOptionsMessage === 'function' && children === noOptionsMessage()) {
       const { height = 35 } = noOptionsMsgStyles;
+      return height;
+    }
+    else if (typeof loadingMessage === 'function' && children === loadingMessage()) {
+      const { height = 35 } = loadingMsgStyles;
       return height;
     }
     else {

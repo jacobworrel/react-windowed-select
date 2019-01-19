@@ -54,12 +54,14 @@ class MenuList extends React.PureComponent {
         : children;
 
       const groupHeadingStyles = getStyles('groupHeading', nextProps);
+      const loadingMsgStyles = getStyles('loadingMessage', nextProps);
       const noOptionsMsgStyles = getStyles('noOptionsMessage', nextProps);
       const optionStyles = getStyles('option', nextProps);
       const getHeight = createGetHeight({
         groupHeadingStyles,
         noOptionsMsgStyles,
         optionStyles,
+        loadingMsgStyles,
       });
 
       const heights = children.map(getHeight);
