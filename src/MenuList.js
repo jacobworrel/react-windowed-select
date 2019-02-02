@@ -24,7 +24,6 @@ class MenuList extends React.PureComponent {
     this.getItemSize = this.getItemSize.bind(this);
 
     this.state = {
-      windowedOptions: [],
       children: null,
     }
 
@@ -120,21 +119,33 @@ class MenuList extends React.PureComponent {
   }
 
   render() {
-    const { getStyles, innerRef, menuOptions, render, toOption } = this.props;
+    const {
+      children,
+      getStyles,
+      innerRef,
+      isLoading,
+      LoadingMessage,
+      menuOptions,
+      NoOptionsMessage,
+      render,
+      toOption,
+    } = this.props;
     // const { children: stateChildren, estimatedItemSize, menuHeight, itemCount } = this.state;
 
-    const { maxHeight, ...menuListStyle } = getStyles('menuList', this.props);
-
-    const heights = menuOptions.map(x => 35);
+    const { maxHeight: _, ...menuListStyle } = getStyles('menuList', this.props);
+    const childrenList = React.Children.toArray(children);
+    const list = children !== null ? childrenList : menuOptions;
+    console.log(menuOptions)
+    const heights = list.map(x => 35);
 
     // const currentIndex = getCurrentIndex(menuOptions);
 
-    const itemCount = menuOptions.length;
+    const itemCount = children !== null ? React.Children.count(children) : menuOptions.length;
     // calc menu height
     const sum = (a, b) => a + b;
     const totalHeight = heights.reduce(sum, 0);
-    const { maxHeight: maxHeight2 } = getStyles('menuList', this.props);
-    const menuHeight = Math.min(maxHeight2, totalHeight);
+    const { maxHeight } = getStyles('menuList', this.props);
+    const menuHeight = Math.min(maxHeight, totalHeight);
     const estimatedItemSize = Math.floor(totalHeight / itemCount);
 
     return (
@@ -144,15 +155,27 @@ class MenuList extends React.PureComponent {
           estimatedItemSize={estimatedItemSize}
           height={menuHeight}
           itemCount={itemCount}
-          itemData={menuOptions}
+          itemData={children !== null ? childrenList : menuOptions}
           itemSize={idx => heights[idx]}
           onItemsRendered={this.props.onItemsRendered}
         >
           {
             ({ data, index, style }) => {
+              const item = data[index] || {};
+              if (item.type.name === 'NoOptionsMessage' || item.type.name === 'LoadingMessage') {
+                return (
+                  <div style={style}>{item}</div>
+                )
+              }
+
+              const optionProps = toOption(item, index);
+              if (optionProps === undefined) {
+                return null;
+              }
               return (
-              <div style={style}>{render(data[index])}</div>
-            )}
+                <div style={style}>{render(optionProps)}</div>
+              )
+            }
           }
         </List>
       </div>

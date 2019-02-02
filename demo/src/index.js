@@ -11,14 +11,16 @@ import {
   options1M,
 } from '../../stories/storyUtil';
 
+const options = options10K;
+
 class Demo extends Component {
   render() {
     return (
       <div>
         <h2>Single Select</h2>
 
-        <h4>1K options</h4>
-        <WindowedSelect options={options10K} />
+        <h4>{options.length} options</h4>
+        <WindowedSelect options={options} />
 
         {/*<h4>5K options</h4>*/}
         {/*<WindowedSelect options={options5K} />*/}

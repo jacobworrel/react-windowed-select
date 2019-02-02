@@ -11,7 +11,6 @@ class WindowedSelect extends React.Component {
     } = this.props;
 
     const isWindowed = options.length >= windowThreshold;
-    console.log('in windowed sel')
     return (
       <Select {...this.props}
         components={{
@@ -22,7 +21,7 @@ class WindowedSelect extends React.Component {
               : {}
           )
         }}
-        renderMenu={true}
+        isWindowed={isWindowed}
       />
     );
   }
