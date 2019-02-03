@@ -11,7 +11,7 @@ import {
   options1M,
 } from '../../stories/storyUtil';
 
-const options = options10K;
+const options = options1K;
 
 class Demo extends Component {
   render() {
@@ -22,25 +22,25 @@ class Demo extends Component {
         <h4>{options.length} options</h4>
         <WindowedSelect options={options} />
 
-        {/*<h4>5K options</h4>*/}
-        {/*<WindowedSelect options={options5K} />*/}
+        <h4>5K options</h4>
+        <WindowedSelect options={options5K} />
 
-        {/*<h4>10K options</h4>*/}
-        {/*<WindowedSelect options={options10K}/>*/}
+        <h4>10K options</h4>
+        <WindowedSelect options={options10K}/>
 
-        {/*<h4>Grouped</h4>*/}
-        {/*<WindowedSelect options={groupedOptions} windowThreshold={0} />*/}
+        <h4>Grouped</h4>
+        <WindowedSelect options={groupedOptions} windowThreshold={0} />
 
-        {/*<h2>Multi Select</h2>*/}
+        <h2>Multi Select</h2>
 
-        {/*<h4>1K options</h4>*/}
-        {/*<WindowedSelect isMulti options={options10K} />*/}
+        <h4>1K options</h4>
+        <WindowedSelect isMulti options={options10K} />
 
-        {/*<h4>5K options</h4>*/}
-        {/*<WindowedSelect isMulti options={options5K} />*/}
+        <h4>5K options</h4>
+        <WindowedSelect isMulti options={options5K} />
 
-        {/*<h4>10K options</h4>*/}
-        {/*<WindowedSelect isMulti options={options10K}/>*/}
+        <h4>10K options</h4>
+        <WindowedSelect isMulti options={options10K}/>
       </div>
     )
   }
