@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import WindowedSelect from '../../src';
+import WindowedSelect, { WindowedMenuList } from '../../src/index';
+import Select from 'react-select';
 
 import {
   groupedOptions,
@@ -39,6 +40,12 @@ class Demo extends Component {
 
         <h4>10K options</h4>
         <WindowedSelect isMulti options={options10K}/>
+
+        <h2>Original React Select + MenuList</h2>
+        <Select
+          options={options1K}
+          components={{ MenuList: WindowedMenuList }}
+        />
       </div>
     )
   }
