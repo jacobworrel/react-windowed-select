@@ -51,7 +51,7 @@ The number of options beyond which the menu will be windowed.
 ## Custom Styles
 
 You can still use the [styles API](https://www.react-select.com/styles) from `react-select` v2 to customize how your Select component looks.
-The height property of the `Option`, `GroupHeading` and/or `NoOptionsMessage` components is used to determine the total height of the windowed menu and the following defaults are provided:
+The height property of the `Option`, `GroupHeading`, `NoOptionsMessage` and/or `LoadingMessage` components is used to determine the total height of the windowed menu and the following defaults are provided:
 
 |Component         |Default Height|
 |------------------|--------------|
