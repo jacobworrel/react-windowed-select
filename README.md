@@ -38,6 +38,7 @@ class App extends React.Component {
 
 [![Edit react-windowed-select](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/n592j4l13m)
 
+For more examples, check out the [Storybook](https://peaceful-leavitt-38971b.netlify.com).
 
 ## Props
 
