@@ -3,6 +3,7 @@
 [![Travis][build-badge]][build]
 [![npm package][npm-badge]][npm]
 [![Coveralls][coveralls-badge]][coveralls]
+[![Storybook][storybook-badge]][storybook]
 
 An integration of `react-window` with `react-select` v2 to efficiently render large lists.
 
@@ -38,7 +39,7 @@ class App extends React.Component {
 
 [![Edit react-windowed-select](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/n592j4l13m)
 
-For more examples, check out the [Storybook](https://peaceful-leavitt-38971b.netlify.com).
+For more examples, check out the [Storybook][storybook].
 
 ## Props
 
@@ -101,3 +102,6 @@ MenuList
 
 [coveralls-badge]: https://img.shields.io/coveralls/jacobworrel/react-windowed-select/master.png?style=flat-square
 [coveralls]: https://coveralls.io/github/jacobworrel/react-windowed-select
+
+[storybook-badge]: https://github.com/storybooks/brand/blob/master/badge/badge-storybook.svg
+[storybook]: https://peaceful-leavitt-38971b.netlify.com
