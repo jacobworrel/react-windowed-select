@@ -1,6 +1,6 @@
 {
   "name": "react-windowed-select",
-  "version": "0.0.3alpha",
+  "version": "1.0.0-alpha",
   "description": "React Windowed Select",
   "main": "lib/index.js",
   "files": [
@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "prop-types": "15.6.2",
-    "react-select": "2.3.0",
+    "react-select": "3.0.4",
     "react-window": "1.5.0"
   },
   "peerDependencies": {
