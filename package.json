@@ -1,6 +1,6 @@
 {
   "name": "react-windowed-select",
-  "version": "0.0.3alpha",
+  "version": "1.0.0-alpha",
   "description": "React Windowed Select",
   "main": "lib/index.js",
   "files": [
@@ -21,18 +21,18 @@
   },
   "dependencies": {
     "prop-types": "15.6.2",
-    "react-select": "2.3.0",
-    "react-window": "1.5.0"
+    "react-select": "3.0.4",
+    "react-window": "1.8.2"
   },
   "peerDependencies": {
     "react": "16.x"
   },
   "devDependencies": {
     "@babel/core": "7.2.2",
-    "@storybook/addon-actions": "4.1.2",
-    "@storybook/addon-links": "4.1.2",
-    "@storybook/addons": "4.1.2",
-    "@storybook/react": "4.1.2",
+    "@storybook/addon-actions": "5.1.8",
+    "@storybook/addon-links": "5.1.8",
+    "@storybook/addons": "5.1.8",
+    "@storybook/react": "5.1.8",
     "babel-jest": "23.6.0",
     "babel-loader": "8.0.4",
     "babel-preset-es2015": "6.24.1",
