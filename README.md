@@ -5,7 +5,7 @@
 [![Coveralls][coveralls-badge]][coveralls]
 [![Storybook][storybook-badge]][storybook]
 
-An integration of `react-window` with `react-select` v2 to efficiently render large lists.
+An integration of `react-window` with `react-select` to efficiently render large lists.
 
 ## Installation and Usage
 
@@ -52,7 +52,7 @@ The number of options beyond which the menu will be windowed.
 
 ## Custom Styles
 
-You can still use the [styles API](https://www.react-select.com/styles) from `react-select` v2 to customize how your Select component looks.
+You can still use the [styles API](https://www.react-select.com/styles) from `react-select` to customize how your Select component looks.
 The height property of the `Option`, `GroupHeading`, `NoOptionsMessage` and/or `LoadingMessage` components is used to determine the total height of the windowed menu and the following defaults are provided:
 
 |Component         |Default Height|
