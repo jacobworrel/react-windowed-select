@@ -117,13 +117,18 @@ class MenuList extends React.PureComponent {
   }
 
   render() {
-    const { getStyles, innerRef } = this.props;
+    const { getStyles, innerRef, selectProps } = this.props;
     const { children: stateChildren, estimatedItemSize, menuHeight, itemCount } = this.state;
 
     const { maxHeight, ...menuListStyle } = getStyles('menuList', this.props);
+    const { classNamePrefix, isMulti } = selectProps || {};
 
     return (
-      <div ref={innerRef} style={menuListStyle}>
+      <div
+        className={`${classNamePrefix}__menu-list${isMulti ? ` ${classNamePrefix}__menu-list--is-multi`: ''}`}
+        ref={innerRef}
+        style={menuListStyle}
+      >
         <List
           ref={this.setListRef}
           estimatedItemSize={estimatedItemSize}

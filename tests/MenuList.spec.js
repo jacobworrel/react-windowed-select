@@ -1,5 +1,5 @@
 import 'jest-dom/extend-expect'; //todo remove?
-import { mount, shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import React from 'react';
 import MenuList from '../src/MenuList';
 
@@ -57,4 +57,43 @@ describe('MenuList', () => {
 
     expect(resetAfterIndex.mock.calls.length).toBe(1);
   });
+
+  test('add class name prefix to menu list', () => {
+    const MockComponent = () => (<div/>);
+    const children = [
+      React.createElement(MockComponent, { key: 1 }),
+    ];
+    const props = {
+      selectProps: {
+        classNamePrefix: 'foo',
+      },
+      getStyles () {
+        return {
+          maxHeight: 200,
+        }
+      },
+    };
+    const wrapper = mount(<MenuList {...props}>{children}</MenuList>);
+    expect(wrapper.html()).toMatch(/foo__menu-list/);
+  });
+
+  test('add class name prefix to menu list when isMulti is true', () => {
+    const MockComponent = () => (<div/>);
+    const children = [
+      React.createElement(MockComponent, { key: 1 }),
+    ];
+    const props = {
+      selectProps: {
+        classNamePrefix: 'foo',
+        isMulti: true,
+      },
+      getStyles () {
+        return {
+          maxHeight: 200,
+        }
+      },
+    };
+    const wrapper = mount(<MenuList {...props}>{children}</MenuList>);
+    expect(wrapper.html()).toMatch(/foo__menu-list--is-multi/);
+  })
 });
