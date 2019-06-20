@@ -1,7 +1,7 @@
 import React from 'react';
 import WindowedSelect from './WindowedSelect.js';
 
-export { components } from 'react-select';
-export { default as MenuList } from './MenuList';
+export * from 'react-select';
+export { default as WindowedMenuList } from './MenuList';
 
 export default WindowedSelect;

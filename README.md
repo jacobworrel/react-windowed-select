@@ -30,10 +30,8 @@ for (let i = 0; i < 10000; i += 1) {
   });
 }
 
-class App extends React.Component {
-  render() {
-    return <WindowedSelect options={options} />;
-  }
+function App () {
+  return <WindowedSelect options={options} />;
 }
 ```
 
@@ -49,6 +47,35 @@ All props passed to the `WindowedSelect` component are forwarded to the underlyi
 ### windowThreshold | default = 100
 
 The number of options beyond which the menu will be windowed.
+
+## Named Exports
+All of the named exports from `react-select` are re-exported from `react-windowed-select` for easy access to features
+that allow you to customize your Select component.
+
+```javascript
+import { components, createFilter } from 'react-windowed-select';
+import React from "react";
+
+const options = [
+  { value: 1, label: 'Foo' },
+  { value: 2, label: 'Bar '},
+];
+
+const customFilter = createFilter({ ignoreAccents: false });
+const customComponents = {
+  ClearIndicator: (props) => <components.ClearIndicator {...props}>clear</components.ClearIndicator>
+};
+
+function App () {
+  return (
+    <WindowedSelect
+       components={customComponents}
+       filterOption={customFilter}
+       options={options}
+     />
+   );
+}
+```
 
 ## Custom Styles
 
