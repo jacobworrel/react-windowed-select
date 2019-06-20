@@ -1,4 +1,4 @@
-import MenuList from './MenuList.js';
+import MenuList from './MenuList';
 import React from 'react';
 import Select from 'react-select';
 
