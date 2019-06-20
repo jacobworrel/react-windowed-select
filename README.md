@@ -70,12 +70,14 @@ function App () {
   return (
     <WindowedSelect
        components={customComponents}
+       isClearable={true}
        filterOption={customFilter}
        options={options}
      />
    );
 }
 ```
+[![Edit react-windowed-select custom filter and component](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/sweet-snowflake-evjeo?fontsize=14)
 
 ## Custom Styles
 
