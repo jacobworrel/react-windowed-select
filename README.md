@@ -42,7 +42,8 @@ For more examples, check out the [Storybook][storybook].
 ## Props
 
 `react-windowed-select` is just a wrapper around `react-select`.
-All props passed to the `WindowedSelect` component are forwarded to the underlying `Select` component from `react-select`.
+All props passed to the `WindowedSelect` component are forwarded to the default exported `Select` component
+from `react-select`.
 
 ### windowThreshold | default = 100
 
