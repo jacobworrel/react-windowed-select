@@ -7,11 +7,13 @@ class WindowedSelect extends React.Component {
     const {
       options,
       windowThreshold,
+      selectRef
     } = this.props;
 
     const isWindowed = options.length >= windowThreshold;
     return (
       <Select {...this.props}
+        ref={selectRef}
         components={{
           ...this.props.components,
           ...(
@@ -28,6 +30,7 @@ class WindowedSelect extends React.Component {
 WindowedSelect.defaultProps = {
   windowThreshold: 100,
   options: [],
+  selectRef: null,
 };
 
 export default WindowedSelect;
