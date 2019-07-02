@@ -2,6 +2,7 @@ import React from 'react';
 
 import { storiesOf } from '@storybook/react';
 
+import Select from 'react-select';
 import WindowedSelect from '../src';
 import { options1 } from './storyUtil';
 import { options50 } from './storyUtil';
@@ -63,4 +64,18 @@ storiesOf('Multi Select', module)
       }),
     }}
   />
+))
+.add('forwarded ref', () => (
+  <div>
+    <WindowedSelect
+      menuIsOpen
+      isMulti
+      options={options50}
+      ref={x => console.log('react-windowed-select ref:', x)}
+      windowThreshold={0}
+    />
+    <Select
+      ref={x => console.log('react-select ref:', x)}
+    />
+  </div>
 ));

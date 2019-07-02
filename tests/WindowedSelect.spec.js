@@ -8,13 +8,6 @@ import WindowedSelect from '../src/WindowedSelect';
 const { MenuList } = components;
 
 describe('WindowedSelect', () => {
-  test('sets default props', () => {
-    const selectWrapper = shallow(<WindowedSelect />);
-
-    expect(selectWrapper.prop('options')).toEqual([]);
-    expect(selectWrapper.prop('windowThreshold')).toEqual(100);
-  });
-
   test('passes props to Select component', () => {
     const selectWrapper = shallow(<WindowedSelect foo={1} bar={2} />);
 
@@ -22,7 +15,13 @@ describe('WindowedSelect', () => {
     expect(selectWrapper.find(Select).prop('bar')).toBeTruthy();
   });
 
-  test('renders a windowed menu', async () => {
+  test('handles nil options', () => {
+    expect(() => shallow(<WindowedSelect options={null} />)).not.toThrow();
+    expect(() => shallow(<WindowedSelect options={undefined} />)).not.toThrow();
+    expect(() => shallow(<WindowedSelect />)).not.toThrow();
+  });
+
+  test('renders a windowed menu when options length > windowThreshold', () => {
     const options = [
       { label: 'foo', value: 1 },
     ];
@@ -39,7 +38,7 @@ describe('WindowedSelect', () => {
     expect(selectWrapper.find(WindowedMenuList).exists()).toBeTruthy();
   });
 
-  test('renders a non-windowed menu', async () => {
+  test('renders a windowed menu when options length === windowThreshold', () => {
     const options = [
       { label: 'foo', value: 1 },
     ];
@@ -48,6 +47,24 @@ describe('WindowedSelect', () => {
       <WindowedSelect
         menuIsOpen
         options={options}
+        windowThreshold={1}
+      />
+    );
+
+    expect(selectWrapper.find(MenuList).exists()).toBeFalsy();
+    expect(selectWrapper.find(WindowedMenuList).exists()).toBeTruthy();
+  });
+
+  test('renders a non-windowed menu when options length < windowThreshold', () => {
+    const options = [
+      { label: 'foo', value: 1 },
+    ];
+
+    let selectWrapper = mount(
+      <WindowedSelect
+        menuIsOpen
+        options={options}
+        windowThreshold={2}
       />
     );
     expect(selectWrapper.find(MenuList).exists()).toBeTruthy();
