@@ -2,32 +2,23 @@ import MenuList from './MenuList';
 import React from 'react';
 import Select from 'react-select';
 
-class WindowedSelect extends React.Component {
-  render () {
-    const {
-      options,
-      windowThreshold,
-    } = this.props;
-
-    const isWindowed = options.length >= windowThreshold;
-    return (
-      <Select {...this.props}
-        components={{
-          ...this.props.components,
-          ...(
-            isWindowed
-              ? { MenuList }
-              : {}
-          )
-        }}
-      />
-    );
-  }
+function WindowedSelect (props, ref) {
+  const { windowThreshold = 100 } = props;
+  const isWindowed = (props.options || []).length >= windowThreshold;
+  return (
+    <Select
+      {...props}
+      components={{
+        ...props.components,
+        ...(
+          isWindowed
+            ? { MenuList }
+            : {}
+        )
+      }}
+      ref={ref}
+    />
+  );
 }
 
-WindowedSelect.defaultProps = {
-  windowThreshold: 100,
-  options: [],
-};
-
-export default WindowedSelect;
+export default React.forwardRef(WindowedSelect);
