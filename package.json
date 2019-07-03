@@ -1,6 +1,6 @@
 {
   "name": "react-windowed-select",
-  "version": "1.0.2-beta",
+  "version": "2.0.0",
   "description": "React Windowed Select",
   "main": "lib/index.js",
   "files": [
