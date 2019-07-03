@@ -25,7 +25,7 @@ storiesOf('Multi Select', module)
   <WindowedSelect
     options={groupedOptions}
     menuIsOpen
-    windowThreshold={0}
+    windowThreshold={10}
     isMulti />
 ))
 .add('windowed - custom styles', () => (
