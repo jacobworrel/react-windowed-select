@@ -1,4 +1,5 @@
 import {
+  calcOptionsLength,
   createGetHeight,
   flattenGroupedChildren,
   getCurrentIndex,
@@ -7,6 +8,28 @@ import {
 import React from 'react';
 
 describe(`util`, () => {
+  describe(`calcOptionsLength`, () => {
+    it(`should calculate options length`, () => {
+      const options = [1,2,3];
+      expect(calcOptionsLength(options)).toEqual(3);
+    });
+
+    it(`should calculate grouped options length`, () => {
+      const groupedOptions = [
+        { options: [1,2,3] },
+        { options: [4,5,6] },
+        { options: [7,8,9] },
+      ];
+      expect(calcOptionsLength(groupedOptions)).toEqual(9);
+    });
+
+    it(`should handle nil options`, () => {
+      expect(() => calcOptionsLength()).not.toThrow();
+      expect(() => calcOptionsLength(undefined)).not.toThrow();
+      expect(() => calcOptionsLength(null)).not.toThrow();
+    });
+  });
+
   describe(`createGetHeight`, () => {
     const groupHeadingStyles = { height: 0 };
     const optionStyles = { height: 1 };

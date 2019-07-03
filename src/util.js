@@ -1,5 +1,15 @@
 import React from 'react';
 
+export function calcOptionsLength (options) {
+  options = options || [];
+  const head = options[0] || {};
+  const isGrouped = head.options !== undefined;
+
+  return isGrouped
+    ? options.reduce((result, group) => result + group.options.length, 0)
+    : options.length;
+}
+
 export function flattenGroupedChildren (children) {
   return children.reduce((result, child) => {
     const {
