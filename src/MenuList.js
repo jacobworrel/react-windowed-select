@@ -100,10 +100,10 @@ class MenuList extends React.PureComponent {
     /**
      * enables scrolling on key down arrow
      *
-     * note: prevents scrolling on index 0 and 1 to avoid
+     * note: prevents scrolling on index 0 to avoid
      * returning to top of menu when it remains open after selecting
      */
-    if (currentIndex > 1) {
+    if (currentIndex >= 1) {
       this.list.scrollToItem(currentIndex);
     }
   }
@@ -121,8 +121,6 @@ class MenuList extends React.PureComponent {
     const { children: stateChildren, estimatedItemSize, menuHeight, itemCount } = this.state;
 
     // remove maxHeight, paddingTop, paddingBottom bc they interfere with dynamic height calculation
-    // @todo
-    // to add padding to top and bottom of list, see https://github.com/bvaughn/react-window#can-i-add-padding-to-the-top-and-bottom-of-a-list
     const {
       maxHeight,
       paddingTop,
