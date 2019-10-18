@@ -15,6 +15,24 @@ storiesOf('Multi Select', module)
 .add('windowed - 1 option', () => (
   <WindowedSelect options={options1} menuIsOpen windowThreshold={0} isMulti />
 ))
+.add('windowed - no options', () => (
+  <WindowedSelect
+    isMulti
+    menuIsOpen
+    options={[]}
+    windowThreshold={0}
+  />
+))
+.add('windowed - loading', () => (
+  <WindowedSelect
+    isLoading
+    isMulti
+    loadingMessage={() => 'Loading...'}
+    menuIsOpen
+    options={[]}
+    windowThreshold={0}
+  />
+))
 .add('windowed - 200 options', () => (
   <WindowedSelect options={options200} isMulti/>
 ))

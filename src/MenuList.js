@@ -100,10 +100,10 @@ class MenuList extends React.PureComponent {
     /**
      * enables scrolling on key down arrow
      *
-     * note: prevents scrolling on index 0 and 1 to avoid
+     * note: prevents scrolling on index 0 to avoid
      * returning to top of menu when it remains open after selecting
      */
-    if (currentIndex > 1) {
+    if (currentIndex >= 1) {
       this.list.scrollToItem(currentIndex);
     }
   }
@@ -120,26 +120,29 @@ class MenuList extends React.PureComponent {
     const { getStyles, innerRef, selectProps } = this.props;
     const { children: stateChildren, estimatedItemSize, menuHeight, itemCount } = this.state;
 
-    const { maxHeight, ...menuListStyle } = getStyles('menuList', this.props);
+    // remove maxHeight, paddingTop, paddingBottom bc they interfere with dynamic height calculation
+    const {
+      maxHeight,
+      paddingTop,
+      paddingBottom,
+      ...menuListStyle
+    } = getStyles('menuList', this.props);
     const { classNamePrefix, isMulti } = selectProps || {};
 
     return (
-      <div
-        className={`${classNamePrefix}__menu-list${isMulti ? ` ${classNamePrefix}__menu-list--is-multi`: ''}`}
-        ref={innerRef}
+      <List
+        className={classNamePrefix ? `${classNamePrefix}__menu-list${isMulti ? ` ${classNamePrefix}__menu-list--is-multi`: ''}` : ''}
         style={menuListStyle}
+        ref={this.setListRef}
+        outerRef={innerRef}
+        estimatedItemSize={estimatedItemSize}
+        height={menuHeight}
+        itemCount={itemCount}
+        itemData={stateChildren}
+        itemSize={this.getItemSize}
       >
-        <List
-          ref={this.setListRef}
-          estimatedItemSize={estimatedItemSize}
-          height={menuHeight}
-          itemCount={itemCount}
-          itemData={stateChildren}
-          itemSize={this.getItemSize}
-        >
-          {ItemWrapper}
-        </List>
-      </div>
+        {ItemWrapper}
+      </List>
     );
   }
 }
