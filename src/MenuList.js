@@ -120,26 +120,31 @@ class MenuList extends React.PureComponent {
     const { getStyles, innerRef, selectProps } = this.props;
     const { children: stateChildren, estimatedItemSize, menuHeight, itemCount } = this.state;
 
-    const { maxHeight, ...menuListStyle } = getStyles('menuList', this.props);
+    // remove maxHeight, paddingTop, paddingBottom bc they interfere with dynamic height calculation
+    // @todo
+    // to add padding to top and bottom of list, see https://github.com/bvaughn/react-window#can-i-add-padding-to-the-top-and-bottom-of-a-list
+    const {
+      maxHeight,
+      paddingTop,
+      paddingBottom,
+      ...menuListStyle
+    } = getStyles('menuList', this.props);
     const { classNamePrefix, isMulti } = selectProps || {};
 
     return (
-      <div
-        className={`${classNamePrefix}__menu-list${isMulti ? ` ${classNamePrefix}__menu-list--is-multi`: ''}`}
-        ref={innerRef}
+      <List
+        className={classNamePrefix ? `${classNamePrefix}__menu-list${isMulti ? ` ${classNamePrefix}__menu-list--is-multi`: ''}` : ''}
         style={menuListStyle}
+        ref={this.setListRef}
+        outerRef={innerRef}
+        estimatedItemSize={estimatedItemSize}
+        height={menuHeight}
+        itemCount={itemCount}
+        itemData={stateChildren}
+        itemSize={this.getItemSize}
       >
-        <List
-          ref={this.setListRef}
-          estimatedItemSize={estimatedItemSize}
-          height={menuHeight}
-          itemCount={itemCount}
-          itemData={stateChildren}
-          itemSize={this.getItemSize}
-        >
-          {ItemWrapper}
-        </List>
-      </div>
+        {ItemWrapper}
+      </List>
     );
   }
 }
