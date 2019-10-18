@@ -1,6 +1,6 @@
 {
   "name": "react-windowed-select",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "React Windowed Select",
   "main": "lib/index.js",
   "files": [
@@ -20,9 +20,9 @@
     "test:watch": "jest --watchAll"
   },
   "dependencies": {
-    "prop-types": "15.6.2",
-    "react-select": "3.0.4",
-    "react-window": "1.8.2"
+    "prop-types": "^15.7.2",
+    "react-select": "^3.0.8",
+    "react-window": "^1.8.5"
   },
   "peerDependencies": {
     "react": "^16.8.0",
