@@ -4,17 +4,8 @@ import {
   getCurrentIndex,
 } from './util';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { VariableSizeList as List } from 'react-window';
-
-class ItemWrapper extends React.PureComponent {
-  render() {
-    const { data, index, style } = this.props;
-    return (
-      <div style={style}>{data[index]}</div>
-    );
-  }
-}
 
 class MenuList extends React.PureComponent {
   constructor (props) {
@@ -72,9 +63,10 @@ class MenuList extends React.PureComponent {
 
       // calc menu height
       const sum = (a, b) => a + b;
+      const { maxHeight, paddingBottom = 0, paddingTop = 0 } = getStyles('menuList', nextProps);
       const totalHeight = heights.reduce(sum, 0);
-      const { maxHeight } = getStyles('menuList', nextProps);
-      const menuHeight = Math.min(maxHeight, totalHeight);
+      const totalMenuHeight = totalHeight + paddingBottom + paddingTop;
+      const menuHeight = Math.min(maxHeight, totalMenuHeight);
       const estimatedItemSize = Math.floor(totalHeight / itemCount);
 
       return {
@@ -120,9 +112,8 @@ class MenuList extends React.PureComponent {
     const { getStyles, innerRef, selectProps } = this.props;
     const { children: stateChildren, estimatedItemSize, menuHeight, itemCount } = this.state;
 
-    // remove maxHeight, paddingTop, paddingBottom bc they interfere with dynamic height calculation
     const {
-      maxHeight,
+      maxHeight, // must be removed bc state.menuHeight should be the single source of truth
       paddingTop,
       paddingBottom,
       ...menuListStyle
@@ -136,12 +127,33 @@ class MenuList extends React.PureComponent {
         ref={this.setListRef}
         outerRef={innerRef}
         estimatedItemSize={estimatedItemSize}
+        innerElementType={forwardRef(({ style, ...rest }, ref) => (
+          <div
+            ref={ref}
+            style={{
+              ...style,
+              height: `${parseFloat(style.height) + paddingBottom + paddingTop}px`
+            }}
+            {...rest}
+          />
+        ))}
         height={menuHeight}
         itemCount={itemCount}
         itemData={stateChildren}
         itemSize={this.getItemSize}
       >
-        {ItemWrapper}
+        {({ data, index, style }) => {
+          return (
+            <div
+              style={{
+                ...style,
+                top: `${parseFloat(style.top) + paddingTop}px`
+              }}
+            >
+              {data[index]}
+            </div>
+          );
+        }}
       </List>
     );
   }
