@@ -20,9 +20,9 @@
     "test:watch": "jest --watchAll"
   },
   "dependencies": {
-    "prop-types": "15.6.2",
-    "react-select": "3.0.4",
-    "react-window": "1.8.2"
+    "prop-types": "^15.7.2",
+    "react-select": "^3.0.8",
+    "react-window": "^1.8.5"
   },
   "peerDependencies": {
     "react": "^16.8.0",
