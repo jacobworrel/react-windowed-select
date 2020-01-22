@@ -52,6 +52,7 @@ export function createGetHeight ({
       props: {
         type,
         children,
+        inputValue,
         selectProps: {
           noOptionsMessage,
           loadingMessage,
@@ -67,11 +68,11 @@ export function createGetHeight ({
       const { height = 35 } = optionStyles;
       return height;
     }
-    else if (typeof noOptionsMessage === 'function' && children === noOptionsMessage()) {
+    else if (typeof noOptionsMessage === 'function' && children === noOptionsMessage({ inputValue })) {
       const { height = 35 } = noOptionsMsgStyles;
       return height;
     }
-    else if (typeof loadingMessage === 'function' && children === loadingMessage()) {
+    else if (typeof loadingMessage === 'function' && children === loadingMessage({ inputValue })) {
       const { height = 35 } = loadingMsgStyles;
       return height;
     }

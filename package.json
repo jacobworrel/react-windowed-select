@@ -19,6 +19,10 @@
     "test": "jest --coverage",
     "test:watch": "jest --watchAll"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jacobworrel/react-windowed-select.git"
+  },
   "dependencies": {
     "prop-types": "15.7.2",
     "react-select": "3.0.8",
@@ -72,7 +76,6 @@
   "author": "",
   "homepage": "",
   "license": "MIT",
-  "repository": "",
   "keywords": [
     "react-component"
   ]

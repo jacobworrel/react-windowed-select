@@ -44,6 +44,7 @@ storiesOf('Single Select', module)
   .add('windowed - no options', () => (
     <WindowedSelect
       options={[]}
+      noOptionsMessage={({ inputValue } = {}) => `No ${inputValue !== '' ? `${inputValue} ` : ''}options`}
       menuIsOpen
       windowThreshold={0} />
   ))
@@ -52,7 +53,7 @@ storiesOf('Single Select', module)
     options={[]}
     menuIsOpen
     windowThreshold={0}
-    loadingMessage={() => 'Loading...'}
+    loadingMessage={({ inputValue }) => `Loading ${inputValue}...`}
     styles={{
       loadingMessage: (base) => ({
         ...base,
