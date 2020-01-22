@@ -15,19 +15,20 @@ storiesOf('Multi Select', module)
 .add('windowed - 1 option', () => (
   <WindowedSelect options={options1} menuIsOpen windowThreshold={0} isMulti />
 ))
-.add('windowed - no options', () => (
+.add('windowed - no options msg (with dynamic input value)', () => (
   <WindowedSelect
     isMulti
     menuIsOpen
     options={[]}
+    noOptionsMessage={({ inputValue } = {}) => `No ${inputValue !== '' ? `${inputValue} ` : ''}options`}
     windowThreshold={0}
   />
 ))
-.add('windowed - loading', () => (
+.add('windowed - loading msg (with dynamic input value', () => (
   <WindowedSelect
     isLoading
     isMulti
-    loadingMessage={() => 'Loading...'}
+    loadingMessage={({ inputValue }) => `Loading ${inputValue}...`}
     menuIsOpen
     options={[]}
     windowThreshold={0}
