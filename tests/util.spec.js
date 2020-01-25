@@ -76,6 +76,22 @@ describe(`util`, () => {
       expect(getHeight(child)).toEqual(2);
     });
 
+    test(`calls noOptionsMessage with inputValue`, () => {
+      const noOptionsMessage = jest.fn(({ inputValue }) => inputValue);
+      const child = {
+        props: {
+          children: 'Foo',
+          inputValue: 'Foo',
+          selectProps: {
+            noOptionsMessage,
+          },
+        },
+      };
+
+      expect(getHeight(child)).toEqual(2);
+      expect(noOptionsMessage.mock.calls[0][0]).toEqual({ inputValue: 'Foo' });
+    });
+
     test(`returns loadingMessage height`, () => {
       const child = {
         props: {
@@ -87,6 +103,22 @@ describe(`util`, () => {
       };
 
       expect(getHeight(child)).toEqual(3);
+    });
+
+    test(`calls loadingMessage with inputValue`, () => {
+      const loadingMessage = jest.fn(({ inputValue }) => inputValue);
+      const child = {
+        props: {
+          children: 'Foo',
+          inputValue: 'Foo',
+          selectProps: {
+            loadingMessage,
+          },
+        },
+      };
+
+      expect(getHeight(child)).toEqual(3);
+      expect(loadingMessage.mock.calls[0][0]).toEqual({ inputValue: 'Foo' });
     });
 
     test(`returns default height`, () => {
