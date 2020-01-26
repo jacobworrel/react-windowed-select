@@ -80,6 +80,24 @@ function App () {
 ```
 [![Edit react-windowed-select custom filter and component](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/sweet-snowflake-evjeo?fontsize=14)
 
+### WindowedMenuList
+By default, `react-windowed-select` wraps the standard Select component from `react-select`.
+If you want to add windowing to the Async or Creatable Select components from `react-select`, use the `WindowedMenuList`:
+
+```javascript
+import { WindowedMenuList } from 'react-windowed-select';
+import CreatableSelect from 'react-select/creatable';
+
+function App () {
+  return (
+    <CreatableSelect
+      components={{ MenuList: WindowedMenuList }}
+      // ...other props
+    />
+  );
+}
+```
+
 ## Custom Styles
 
 You can still use the [styles API](https://www.react-select.com/styles) from `react-select` to customize how your Select component looks.
