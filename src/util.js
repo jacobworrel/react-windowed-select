@@ -81,3 +81,5 @@ export function createGetHeight ({
     }
   };
 }
+
+export const sum = (a, b) => a + b;

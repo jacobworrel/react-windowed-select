@@ -1,59 +1,41 @@
 {
-  "name": "react-windowed-select",
-  "version": "2.0.2",
-  "description": "React Windowed Select",
-  "main": "lib/index.js",
-  "files": [
-    "css",
-    "es",
-    "lib",
-    "umd"
-  ],
+  "name": "react-windowed-select-v3",
+  "version": "3.0.0",
+  "description": "",
+  "main": "dist/index.js",
   "scripts": {
-    "build": "nwb build-react-component",
-    "clean": "nwb clean-module && nwb clean-demo",
-    "prepublishOnly": "npm run build",
-    "start": "nwb serve-react-demo",
+    "test": "jest",
+    "build": "parcel build ./src/index.js",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "test": "jest --coverage",
-    "test:watch": "jest --watchAll"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jacobworrel/react-windowed-select.git"
+    "build-demo": "parcel ./demo/index.html --out-dir demo/dist"
   },
   "dependencies": {
-    "prop-types": "15.7.2",
-    "react-select": "3.0.8",
+    "react-select": "3.1.0",
     "react-window": "1.8.5"
   },
   "peerDependencies": {
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0"
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   },
+  "author": "",
+  "license": "ISC",
   "devDependencies": {
-    "@babel/core": "7.2.2",
-    "@storybook/addon-actions": "5.1.8",
-    "@storybook/addon-links": "5.1.8",
-    "@storybook/addons": "5.1.8",
-    "@storybook/react": "5.1.8",
-    "babel-jest": "23.6.0",
-    "babel-loader": "8.0.4",
-    "babel-preset-es2015": "6.24.1",
-    "babel-preset-react": "6.24.1",
-    "chai": "4.2.0",
-    "enzyme": "3.10.0",
-    "enzyme-adapter-react-16": "1.14.0",
-    "enzyme-to-json": "3.3.5",
-    "jest": "23.6.0",
-    "jest-dom": "3.0.0",
-    "jest-in-case": "1.0.2",
-    "nwb": "0.23.x",
-    "ramda": "0.26.1",
-    "react": "16.8.6",
-    "react-dom": "16.8.6",
-    "react-test-renderer": "16.8.6"
+    "@babel/core": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
+    "@babel/preset-react": "^7.9.4",
+    "@storybook/addon-actions": "^5.3.18",
+    "@storybook/addon-links": "^5.3.18",
+    "@storybook/addons": "^5.3.18",
+    "@storybook/react": "^5.3.18",
+    "babel-jest": "^26.0.1",
+    "babel-loader": "^8.1.0",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
+    "jest": "^26.0.1",
+    "parcel-bundler": "^1.12.4",
+    "ramda": "0.27.0",
+    "react-test-renderer": "^16.8.0"
   },
   "jest": {
     "coveragePathIgnorePatterns": [
@@ -68,15 +50,8 @@
         "statements": 90
       }
     },
-    "setupTestFrameworkScriptFile": "<rootDir>/tests/setupTests.js",
-    "transform": {
-      "^.+\\.js$": "<rootDir>/jest.transform.js"
-    }
-  },
-  "author": "",
-  "homepage": "",
-  "license": "MIT",
-  "keywords": [
-    "react-component"
-  ]
+    "setupFilesAfterEnv": [
+      "<rootDir>/tests/setupTests.js"
+    ]
+  }
 }
