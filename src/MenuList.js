@@ -3,10 +3,9 @@ import {
   flattenGroupedChildren,
   getCurrentIndex,
   sum,
-  useShareForwardedRef,
 } from './util';
 
-import React, { forwardRef, useRef, useMemo, useEffect, useState } from 'react';
+import React, { forwardRef, useRef, useMemo, useEffect, useLayoutEffect, useState } from 'react';
 import { VariableSizeList as List } from 'react-window';
 
 const DropdownItem= forwardRef((
@@ -18,17 +17,14 @@ const DropdownItem= forwardRef((
   },
   ref,
 ) => {
-  const resolvedRef = useShareForwardedRef(ref);
+  const resolvedRef = ref || useRef();
 
-  useEffect(() => {
+  // using useLayoutEffect prevents bounciness of options of re-renders
+  useLayoutEffect(() => {
     if (resolvedRef.current) {
-      console.count(`set size ${index}`)
-      console.log('Should set Size: ', index, resolvedRef.current.getBoundingClientRect().height)
-      // setSize({index, size: resolvedRef.current.getBoundingClientRect().height });
+      setSize({index, size: resolvedRef.current.getBoundingClientRect().height });
     }
   }, [resolvedRef.current]);
-
-  // console.log(data);
 
   return (
     <div 
@@ -105,22 +101,21 @@ function MenuList (props) {
   const list = useRef(null);
 
   // method to pass to inner item to set this items outer height
-  const setSizeItemSize = (payload) => {
+  const setSizeItemSize = ({index, size}) => {
+    if (sizes[index] && sizes[index] === size) return;
+
     setSizes({
       ...sizes,
-      [payload.index]: payload.size
+      [index]: size
     });
+
+    // this forces the list to rerender items after the item positions resizing
+    if (list.current)
+      list.current.resetAfterIndex(index);
   }
 
   useEffect(
     () => {
-      /**
-       * not sure why this is necessary
-       */
-      if (children.length === 1) {
-        list.current.resetAfterIndex(0);
-      }
-
       /**
        * enables scrolling on key down arrow
        *

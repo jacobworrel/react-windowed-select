@@ -7,6 +7,7 @@ import WindowedSelect from '../src';
 import { options1 } from './storyUtil';
 import { options50 } from './storyUtil';
 import { options200 } from './storyUtil';
+import { options10K } from './storyUtil';
 import { groupedOptions } from './storyUtil';
 
 storiesOf('Single Select', module)
@@ -35,6 +36,12 @@ storiesOf('Single Select', module)
     menuIsOpen
   />
 ))
+  .add('windowed - 10K options', () => (
+    <WindowedSelect
+      options={options10K}
+      menuIsOpen
+    />
+  ))
   .add('windowed - grouped', () => (
     <WindowedSelect
       options={groupedOptions}
