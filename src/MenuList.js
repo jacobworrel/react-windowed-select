@@ -3,11 +3,52 @@ import {
   flattenGroupedChildren,
   getCurrentIndex,
   sum,
+  useShareForwardedRef,
 } from './util';
-import React, { forwardRef, useRef, useMemo, useEffect } from 'react';
+
+import React, { forwardRef, useRef, useMemo, useEffect, useState } from 'react';
 import { VariableSizeList as List } from 'react-window';
 
+const DropdownItem= forwardRef((
+  {
+    data,
+    index,
+    setSize,
+    ...passThroughProps
+  },
+  ref,
+) => {
+  const resolvedRef = useShareForwardedRef(ref);
+
+  useEffect(() => {
+    if (resolvedRef.current) {
+      console.count(`set size ${index}`)
+      console.log('Should set Size: ', index, resolvedRef.current.getBoundingClientRect().height)
+      // setSize({index, size: resolvedRef.current.getBoundingClientRect().height });
+    }
+  }, [resolvedRef.current]);
+
+  // console.log(data);
+
+  return (
+    <div 
+      key={`option-${index}`} 
+      ref={resolvedRef} 
+    >
+      {data}
+    </div>
+  );
+});
+
 function MenuList (props) {
+
+  // create local state for measured heights
+  const [sizes, setSizes] = useState({});
+  useEffect(() => {
+    setSizes({});
+  }, [props.children] );
+
+
   const children = useMemo(
     () => {
       const children = React.Children.toArray(props.children);
@@ -44,7 +85,6 @@ function MenuList (props) {
   });
 
   const heights = useMemo(() => children.map(getHeight), [children]);
-
   const currentIndex = useMemo(() => getCurrentIndex(children), [children]);
 
   const itemCount = children.length;
@@ -62,8 +102,15 @@ function MenuList (props) {
   } = props;
 
   const { classNamePrefix, isMulti } = selectProps || {};
-
   const list = useRef(null);
+
+  // method to pass to inner item to set this items outer height
+  const setSizeItemSize = (payload) => {
+    setSizes({
+      ...sizes,
+      [payload.index]: payload.size
+    });
+  }
 
   useEffect(
     () => {
@@ -96,7 +143,7 @@ function MenuList (props) {
           ref={ref}
           style={{
             ...style,
-            height: `${parseFloat(style.height) + paddingBottom + paddingTop}px`
+            height: `${ parseFloat(style.height) + paddingBottom + paddingTop }px`
           }}
           {...rest}
         />
@@ -104,20 +151,17 @@ function MenuList (props) {
       height={menuHeight}
       itemCount={itemCount}
       itemData={children}
-      itemSize={index => heights[index]}
+      itemSize={index => sizes[index] || heights[index]}
     >
-      {({ data, index, style }) => {
-        return (
-          <div
-            style={{
-              ...style,
-              top: `${parseFloat(style.top) + paddingTop}px`
-            }}
-          >
-            {data[index]}
-          </div>
-        );
-      }}
+    {({ data, index, style}) => (
+      <div className="react-window-item" style={style}>
+        <DropdownItem 
+          data={data[index]} 
+          index={index}  
+          setSize={setSizeItemSize}
+        />
+      </div>
+    )}
     </List>
   );
 }
