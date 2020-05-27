@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import WindowedSelect from './../src';
+import WindowedSelect from '../src';
 
 import {
   groupedOptions,
