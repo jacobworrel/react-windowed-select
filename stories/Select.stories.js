@@ -5,6 +5,7 @@ import { storiesOf } from '@storybook/react';
 import { options1 } from './storyUtil';
 import { options200 } from './storyUtil';
 import { groupedOptions, StoryWrapper } from './storyUtil';
+import * as R from 'ramda';
 
 storiesOf('Select', module)
 .add('Default', () => (
@@ -81,5 +82,15 @@ storiesOf('Select', module)
         height: 40,
       }),
     }}
+  />
+))
+.add('long label text', () => (
+  <StoryWrapper
+    id="default"
+    classNamePrefix="default"
+    options={R.pipe(
+      R.map(x => ({ value: x, label: `Option ${x}` })),
+      R.insert(3, { value: 'long', label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum' })
+    )(R.range(0, 15))}
   />
 ));

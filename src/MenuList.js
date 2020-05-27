@@ -3,49 +3,42 @@ import {
   flattenGroupedChildren,
   getCurrentIndex,
   sum,
-  useShareForwardedRef,
 } from './util';
 
-import React, { forwardRef, useRef, useMemo, useEffect, useState } from 'react';
+import React, { forwardRef, useRef, useMemo, useEffect, useLayoutEffect, useState } from 'react';
 import { VariableSizeList as List } from 'react-window';
 
-const DropdownItem= forwardRef((
+function MenuItem(
   {
     data,
     index,
-    setSize,
-    ...passThroughProps
-  },
-  ref,
-) => {
-  const resolvedRef = useShareForwardedRef(ref);
+    setMenuItemHeight,
+}) {
+  const ref = useRef();
 
-  useEffect(() => {
-    if (resolvedRef.current) {
-      console.count(`set size ${index}`)
-      console.log('Should set Size: ', index, resolvedRef.current.getBoundingClientRect().height)
-      // setSize({index, size: resolvedRef.current.getBoundingClientRect().height });
+  // using useLayoutEffect prevents bounciness of options of re-renders
+  useLayoutEffect(() => {
+    if (ref.current) {
+      setMenuItemHeight({index, size: ref.current.getBoundingClientRect().height });
     }
-  }, [resolvedRef.current]);
-
-  // console.log(data);
+  }, [ref.current]);
 
   return (
     <div 
       key={`option-${index}`} 
-      ref={resolvedRef} 
+      ref={ref}
     >
       {data}
     </div>
   );
-});
+}
 
 function MenuList (props) {
 
   // create local state for measured heights
-  const [sizes, setSizes] = useState({});
+  const [menuItemHeights, setMenuItemHeights] = useState({});
   useEffect(() => {
-    setSizes({});
+    setMenuItemHeights({});
   }, [props.children] );
 
 
@@ -105,22 +98,21 @@ function MenuList (props) {
   const list = useRef(null);
 
   // method to pass to inner item to set this items outer height
-  const setSizeItemSize = (payload) => {
-    setSizes({
-      ...sizes,
-      [payload.index]: payload.size
+  const setSizeItemSize = ({index, size}) => {
+    if (menuItemHeights[index] && menuItemHeights[index] === size) return;
+
+    setMenuItemHeights({
+      ...menuItemHeights,
+      [index]: size
     });
-  }
+
+    // this forces the list to rerender items after the item positions resizing
+    if (list.current)
+      list.current.resetAfterIndex(index);
+  };
 
   useEffect(
     () => {
-      /**
-       * not sure why this is necessary
-       */
-      if (children.length === 1) {
-        list.current.resetAfterIndex(0);
-      }
-
       /**
        * enables scrolling on key down arrow
        */
@@ -151,14 +143,18 @@ function MenuList (props) {
       height={menuHeight}
       itemCount={itemCount}
       itemData={children}
-      itemSize={index => sizes[index] || heights[index]}
+      itemSize={index => menuItemHeights[index] || heights[index]}
     >
     {({ data, index, style}) => (
-      <div className="react-window-item" style={style}>
-        <DropdownItem 
+      <div
+        style={{
+          ...style,
+          top: `${parseFloat(style.top) + paddingTop}px`,
+        }}>
+        <MenuItem
           data={data[index]} 
           index={index}  
-          setSize={setSizeItemSize}
+          setMenuItemHeight={setSizeItemSize}
         />
       </div>
     )}
