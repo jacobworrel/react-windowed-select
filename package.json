@@ -1,9 +1,11 @@
 {
   "name": "react-windowed-select",
-  "version": "2.0.3-beta.1",
+  "version": "2.0.3-beta.2",
   "description": "",
   "main": "dist/main.js",
-  "files": ["dist/main.js"],
+  "files": [
+    "dist/main.js"
+  ],
   "scripts": {
     "test": "jest",
     "storybook": "start-storybook -p 6006",
