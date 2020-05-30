@@ -1,5 +1,4 @@
 import Select, { components } from 'react-select';
-import 'jest-dom/extend-expect'; //todo remove?
 import { mount, shallow } from 'enzyme';
 import React from 'react';
 import WindowedMenuList from '../src/MenuList';

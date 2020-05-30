@@ -1,9 +1,9 @@
 /coverage
 /demo/dist
-/es
-/lib
+/demo/node_modules
+/dist
 /node_modules
-/umd
 npm-debug.log*
 .idea
 .npmrc
+.cache

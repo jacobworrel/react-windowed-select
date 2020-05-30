@@ -7,6 +7,7 @@ import WindowedSelect from '../src';
 import { options1 } from './storyUtil';
 import { options50 } from './storyUtil';
 import { options200 } from './storyUtil';
+import { options10K } from './storyUtil';
 import { groupedOptions } from './storyUtil';
 
 storiesOf('Multi Select', module)
