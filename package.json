@@ -32,6 +32,7 @@
     "@storybook/addon-links": "^5.3.18",
     "@storybook/addons": "^5.3.18",
     "@storybook/react": "^5.3.18",
+    "@testing-library/react": "^10.2.1",
     "babel-jest": "^26.0.1",
     "babel-loader": "^8.1.0",
     "enzyme": "^3.11.0",
