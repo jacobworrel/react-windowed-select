@@ -2,54 +2,39 @@ import React from 'react';
 
 import { storiesOf } from '@storybook/react';
 
-import WindowedSelect from '../src';
-
 import { options1 } from './storyUtil';
 import { options50 } from './storyUtil';
 import { options200 } from './storyUtil';
-import { groupedOptions } from './storyUtil';
+import { groupedOptions, StoryWrapper } from './storyUtil';
 
 storiesOf('Single Select', module)
-  .add('non-windowed - 50 options', () =>
-    <WindowedSelect
-      options={options50}
-      menuIsOpen
-    />
-  )
-  .add('non-windowed - grouped', () => (
-    <WindowedSelect
+  .add('grouped', () => (
+    <StoryWrapper
       options={groupedOptions}
       menuIsOpen
     />))
-  .add('windowed - 1 option', () => (
-    <WindowedSelect
+  .add('1 option', () => (
+    <StoryWrapper
       options={options1}
       menuIsOpen
-      windowThreshold={0}
       noOptionsMessage={() => "Hello"}
     />
   ))
-.add('windowed - 200 options', () => (
-  <WindowedSelect
+.add('200 options', () => (
+  <StoryWrapper
     options={options200}
     menuIsOpen
   />
 ))
-  .add('windowed - grouped', () => (
-    <WindowedSelect
-      options={groupedOptions}
-      menuIsOpen
-      windowThreshold={0}
-    />))
-  .add('windowed - no options', () => (
-    <WindowedSelect
+  .add('no options', () => (
+    <StoryWrapper
       options={[]}
       noOptionsMessage={({ inputValue } = {}) => `No ${inputValue !== '' ? `${inputValue} ` : ''}options`}
       menuIsOpen
-      windowThreshold={0} />
+    />
   ))
-.add('windowed - custom loading message/height', () => (
-  <WindowedSelect
+.add('custom loading message/height', () => (
+  <StoryWrapper
     options={[]}
     menuIsOpen
     windowThreshold={0}
@@ -63,8 +48,8 @@ storiesOf('Single Select', module)
     isLoading
   />
 ))
-  .add('windowed - custom styles', () => (
-    <WindowedSelect
+  .add('custom styles', () => (
+    <StoryWrapper
       menuIsOpen
       options={options200}
       styles={{
@@ -82,8 +67,8 @@ storiesOf('Single Select', module)
       }}
     />
   ))
-  .add('windowed - custom styles & grouped', () => (
-    <WindowedSelect
+  .add('custom styles & grouped', () => (
+    <StoryWrapper
       menuIsOpen
       options={groupedOptions}
       windowThreshold={0}

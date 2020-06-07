@@ -2,24 +2,11 @@ import React from 'react';
 
 import { storiesOf } from '@storybook/react';
 
-import WindowedSelect from '../src';
 import { options1 } from './storyUtil';
 import { options50 } from './storyUtil';
 import { options200 } from './storyUtil';
 import { options10K } from './storyUtil';
-import { groupedOptions } from './storyUtil';
-
-function StoryWrapper (props) {
-  return (
-    <>
-      <div>Windowed:</div>
-      <WindowedSelect windowThreshold={0} {...props} />
-      <div style={{ marginTop: 320 }}/>
-      <div>Not windowed:</div>
-      <WindowedSelect {...props} />
-    </>
-  );
-}
+import { groupedOptions, StoryWrapper } from './storyUtil';
 
 storiesOf('Multi Select', module)
 .add('200 options', () => (

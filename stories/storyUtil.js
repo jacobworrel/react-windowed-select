@@ -1,4 +1,6 @@
 import * as R from 'ramda';
+import WindowedSelect from '../src';
+import React from 'react';
 
 export const createOptions = R.map(x => ({ value: x, label: `Option ${x}` }));
 
@@ -16,3 +18,15 @@ export const groupedOptions = [
   { label: `Group 2`, options: createOptions(R.range(11, 21)) },
   { label: `Group 3`, options: createOptions(R.range(21, 31)) },
 ];
+
+export function StoryWrapper (props) {
+  return (
+    <>
+      <div>Windowed:</div>
+      <WindowedSelect windowThreshold={0} {...props} />
+      <div style={{ marginTop: 320 }}/>
+      <div>Not windowed:</div>
+      <WindowedSelect {...props} />
+    </>
+  );
+}
