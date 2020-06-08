@@ -9,6 +9,7 @@
   "scripts": {
     "start": "webpack-dev-server --mode development --config webpack.demo.config.js",
     "test": "jest",
+    "test:cov": "jest --coverage",
     "e2e:ci": "npm start & wait-on http://localhost:8080 & cypress run",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
@@ -59,10 +60,10 @@
     ],
     "coverageThreshold": {
       "global": {
-        "branches": 60,
-        "functions": 90,
-        "lines": 90,
-        "statements": 90
+        "branches": 85.45,
+        "functions": 100,
+        "lines": 98.44,
+        "statements": 98.53
       }
     },
     "setupFilesAfterEnv": [
