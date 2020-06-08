@@ -53,6 +53,10 @@
       "<rootDir>/node_modules/",
       "<rootDir>/tests/"
     ],
+    "testPathIgnorePatterns": [
+      "<rootDir>/node_modules/",
+      "<rootDir>/cypress/"
+    ],
     "coverageThreshold": {
       "global": {
         "branches": 60,
