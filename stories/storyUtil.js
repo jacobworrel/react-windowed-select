@@ -23,7 +23,10 @@ export function StoryWrapper (props) {
   return (
     <>
       <div>Windowed:</div>
-      <WindowedSelect windowThreshold={0} {...props} />
+      <WindowedSelect
+        windowThreshold={0}
+        {...props}
+      />
       <div style={{ marginTop: 320 }}/>
       <div>Not windowed:</div>
       <WindowedSelect {...props} />

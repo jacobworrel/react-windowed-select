@@ -10,7 +10,7 @@
     "start": "webpack-dev-server --mode development --config webpack.demo.config.js",
     "test": "jest",
     "test:cov": "jest --coverage",
-    "e2e:ci": "npm start & wait-on http://localhost:8080 & cypress run",
+    "e2e:ci": "npm run storybook -- --ci & wait-on http://localhost:6006 & cypress run",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "build": "webpack",

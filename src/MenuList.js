@@ -76,11 +76,8 @@ function MenuList (props) {
 
       /**
        * enables scrolling on key down arrow
-       *
-       * note: prevents scrolling on index 0 to avoid
-       * returning to top of menu when it remains open after selecting
        */
-      if (currentIndex >= 1 && list.current !== null) {
+      if (currentIndex >= 0 && list.current !== null) {
         list.current.scrollToItem(currentIndex);
       }
     },
