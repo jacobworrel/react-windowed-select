@@ -15,4 +15,5 @@ branches:
     - master
 
 script:
+  - npm test
   - npm run e2e:ci
