@@ -17,7 +17,8 @@ function Demo () {
       <h2>Single Select</h2>
 
       <h4>1K options</h4>
-      <WindowedSelect options={options1K} />
+      {/* id and classNamePrefix used to target elements in Cypress test*/}
+      <WindowedSelect options={options1K} id="demo-1K" classNamePrefix="demo"/>
 
       <h4>5K options</h4>
       <WindowedSelect options={options5K} />
