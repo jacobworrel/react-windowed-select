@@ -30,7 +30,7 @@ describe('Default Select', () => {
   });
 
   it(`scrolls on arrow down`, () => {
-    const focusedInput = getIframeBody().find('#default')
+    const focusedInput = getIframeBody().find('#default', { timeout: 15000 })
       .find('input')
       .first()
       .focus();
