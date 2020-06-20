@@ -10,9 +10,10 @@
     "start": "webpack-dev-server --mode development --config webpack.demo.config.js",
     "test": "jest",
     "test:cov": "jest --coverage",
-    "storybook:ci": "npm run storybook -- --ci --quiet & wait-on http://localhost:6006",
-    "test:cypress": "cypress run",
+    "test:cy": "cypress run",
+    "cy:ci": "start-server-and-test storybook:ci http://localhost:6006 test:cy",
     "storybook": "start-storybook -p 6006",
+    "storybook:ci": "npm run storybook -- --ci --quiet",
     "build-storybook": "build-storybook",
     "build": "webpack",
     "prepublishOnly": "npm run build"
@@ -46,7 +47,7 @@
     "jest": "^26.0.1",
     "ramda": "0.27.0",
     "react-test-renderer": "^16.8.0",
-    "wait-on": "^5.0.1",
+    "start-server-and-test": "^1.11.0",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.11.0"
