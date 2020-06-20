@@ -5,8 +5,7 @@ import { storiesOf } from '@storybook/react';
 import { options1 } from './storyUtil';
 import { options200 } from './storyUtil';
 import { groupedOptions, StoryWrapper } from './storyUtil';
-import * as R from 'ramda';
-
+import { optionsLongLabel } from './storyUtil';
 storiesOf('Select', module)
 .add('Default', () => (
   <StoryWrapper
@@ -50,7 +49,7 @@ storiesOf('Select', module)
     options={[]}
   />
 ))
-.add('custom styles', () => (
+.add('custom styles/height', () => (
   <StoryWrapper
     menuIsOpen
     options={options200}
@@ -67,7 +66,7 @@ storiesOf('Select', module)
     }}
   />
 ))
-.add('custom styles & grouped', () => (
+.add('custom styles/height & grouped', () => (
   <StoryWrapper
     menuIsOpen
     options={groupedOptions}
@@ -85,12 +84,30 @@ storiesOf('Select', module)
   />
 ))
 .add('long label text', () => (
+  <div>
+    <p>Don't explicitly set an option height in the styles prop if you want a dynamic/variable height for options with long labels.</p>
+    <StoryWrapper
+      id="default"
+      classNamePrefix="default"
+      options={optionsLongLabel}
+    />
+  </div>
+))
+.add('custom styles + long label text', () => (
   <StoryWrapper
-    id="default"
-    classNamePrefix="default"
-    options={R.pipe(
-      R.map(x => ({ value: x, label: `Option ${x}` })),
-      R.insert(3, { value: 'long', label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum' })
-    )(R.range(0, 15))}
+    menuIsOpen
+    options={optionsLongLabel}
+    styles={{
+      option: (base) => ({
+        ...base,
+        fontSize: 20,
+        paddingTop: 20,
+        paddingBottom: 20,
+      }),
+      menuList: (base) => ({
+        ...base,
+        maxHeight: 200,
+      })
+    }}
   />
 ));

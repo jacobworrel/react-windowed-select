@@ -85,8 +85,9 @@ function MenuList (props) {
     });
 
     // this forces the list to rerender items after the item positions resizing
-    if (list.current)
+    if (list.current) {
       list.current.resetAfterIndex(index);
+    }
   };
 
   useEffect(
