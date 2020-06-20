@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [2.0.3] - 2020-06-19
+### Fixed
+- options with long label text from overflowing outside container
+### Updated
+- all components from classes to function components with hooks
+
 ## [2.0.2] - 2020-01-29
 ### Fixed
 - not passing proper parameters to noOptionsMessage and loadingMessage
