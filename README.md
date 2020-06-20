@@ -118,7 +118,7 @@ To override these values, use the `styles` prop like you would with a regular `r
   styles={{
     option: (base) => ({
       ...base,
-      height: 60,
+      height: 60, // must be type number
       padding: '20px 12px',
     }),
   }}
