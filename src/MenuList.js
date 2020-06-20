@@ -4,7 +4,8 @@ import {
   getCurrentIndex,
   sum,
 } from './util';
-import React, { forwardRef, useRef, useMemo, useEffect } from 'react';
+
+import React, { forwardRef, useRef, useMemo, useEffect, useLayoutEffect, useState } from 'react';
 import { VariableSizeList as List } from 'react-window';
 
 function MenuList (props) {
@@ -44,7 +45,6 @@ function MenuList (props) {
   });
 
   const heights = useMemo(() => children.map(getHeight), [children]);
-
   const currentIndex = useMemo(() => getCurrentIndex(children), [children]);
 
   const itemCount = children.length;
@@ -62,18 +62,36 @@ function MenuList (props) {
   } = props;
 
   const { classNamePrefix, isMulti } = selectProps || {};
-
   const list = useRef(null);
+
+
+  const [measuredHeights, setMeasuredHeights] = useState({});
+  useEffect(
+    () => {
+      setMeasuredHeights({});
+    },
+    [props.children]
+  );
+
+  // method to pass to inner item to set this items outer height
+  const setMeasuredHeight = ({ index, measuredHeight }) => {
+    if (measuredHeights[index] && measuredHeights[index] === measuredHeight) {
+      return;
+    }
+
+    setMeasuredHeights({
+      ...measuredHeights,
+      [index]: measuredHeight,
+    });
+
+    // this forces the list to rerender items after the item positions resizing
+    if (list.current) {
+      list.current.resetAfterIndex(index);
+    }
+  };
 
   useEffect(
     () => {
-      /**
-       * not sure why this is necessary
-       */
-      if (children.length === 1) {
-        list.current.resetAfterIndex(0);
-      }
-
       /**
        * enables scrolling on key down arrow
        */
@@ -96,7 +114,7 @@ function MenuList (props) {
           ref={ref}
           style={{
             ...style,
-            height: `${parseFloat(style.height) + paddingBottom + paddingTop}px`
+            height: `${ parseFloat(style.height) + paddingBottom + paddingTop }px`
           }}
           {...rest}
         />
@@ -104,21 +122,53 @@ function MenuList (props) {
       height={menuHeight}
       itemCount={itemCount}
       itemData={children}
-      itemSize={index => heights[index]}
+      itemSize={index => measuredHeights[index] || heights[index]}
     >
-      {({ data, index, style }) => {
-        return (
-          <div
-            style={{
-              ...style,
-              top: `${parseFloat(style.top) + paddingTop}px`
-            }}
-          >
-            {data[index]}
-          </div>
-        );
-      }}
+    {({ data, index, style}) => (
+      <div
+        style={{
+          ...style,
+          top: `${parseFloat(style.top) + paddingTop}px`,
+        }}>
+        <MenuItem
+          data={data[index]} 
+          index={index}
+          setMeasuredHeight={setMeasuredHeight}
+          height={heights[index]}
+        />
+      </div>
+    )}
     </List>
+  );
+}
+
+function MenuItem({
+  data,
+  index,
+  setMeasuredHeight,
+  height,
+}) {
+  const ref = useRef();
+
+  // using useLayoutEffect prevents bounciness of options of re-renders
+  useLayoutEffect(() => {
+    if (ref.current) {
+      const measuredHeight = ref.current.getBoundingClientRect().height;
+
+      // only set menu item height when needed, else MenuList is rerendered for each windowed menu item
+      if (measuredHeight > height) {
+        setMeasuredHeight({ index, measuredHeight });
+      }
+    }
+  }, [ref.current]);
+
+  return (
+    <div
+      key={`option-${index}`}
+      ref={ref}
+    >
+      {data}
+    </div>
   );
 }
 export default MenuList;

@@ -5,7 +5,7 @@ import { storiesOf } from '@storybook/react';
 import { options1 } from './storyUtil';
 import { options200 } from './storyUtil';
 import { groupedOptions, StoryWrapper } from './storyUtil';
-
+import { optionsLongLabel } from './storyUtil';
 storiesOf('Select', module)
 .add('Default', () => (
   <StoryWrapper
@@ -49,7 +49,7 @@ storiesOf('Select', module)
     options={[]}
   />
 ))
-.add('custom styles', () => (
+.add('custom styles/height', () => (
   <StoryWrapper
     menuIsOpen
     options={options200}
@@ -66,7 +66,7 @@ storiesOf('Select', module)
     }}
   />
 ))
-.add('custom styles & grouped', () => (
+.add('custom styles/height & grouped', () => (
   <StoryWrapper
     menuIsOpen
     options={groupedOptions}
@@ -80,6 +80,34 @@ storiesOf('Select', module)
         fontSize: 20,
         height: 40,
       }),
+    }}
+  />
+))
+.add('long label text', () => (
+  <div>
+    <p>Don't explicitly set an option height in the styles prop if you want a dynamic/variable height for options with long labels.</p>
+    <StoryWrapper
+      id="default"
+      classNamePrefix="default"
+      options={optionsLongLabel}
+    />
+  </div>
+))
+.add('custom styles + long label text', () => (
+  <StoryWrapper
+    menuIsOpen
+    options={optionsLongLabel}
+    styles={{
+      option: (base) => ({
+        ...base,
+        fontSize: 20,
+        paddingTop: 20,
+        paddingBottom: 20,
+      }),
+      menuList: (base) => ({
+        ...base,
+        maxHeight: 200,
+      })
     }}
   />
 ));
