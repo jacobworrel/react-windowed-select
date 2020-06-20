@@ -16,5 +16,4 @@ branches:
 
 script:
   - npm run test:cov
-  - npm run storybook:ci
-  - npm run test:cypress
+  - npm run cy:ci
