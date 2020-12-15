@@ -5,7 +5,7 @@ import {
   sum,
 } from './util';
 
-import React, { forwardRef, useRef, useMemo, useEffect, useLayoutEffect, useState } from 'react';
+import React, { forwardRef, useRef, useMemo, useEffect, useLayoutEffect } from 'react';
 import { VariableSizeList as List } from 'react-window';
 
 function MenuList (props) {
@@ -65,24 +65,24 @@ function MenuList (props) {
   const list = useRef(null);
 
 
-  const [measuredHeights, setMeasuredHeights] = useState({});
+  const measuredHeights = useRef({});
   useEffect(
     () => {
-      setMeasuredHeights({});
+      measuredHeights.current = {};
     },
     [props.children]
   );
 
   // method to pass to inner item to set this items outer height
   const setMeasuredHeight = ({ index, measuredHeight }) => {
-    if (measuredHeights[index] && measuredHeights[index] === measuredHeight) {
+    if (measuredHeights.current[index] && measuredHeights.current[index] === measuredHeight) {
       return;
     }
 
-    setMeasuredHeights({
-      ...measuredHeights,
-      [index]: measuredHeight,
-    });
+    measuredHeights.current = {
+      ...measuredHeights.current,
+      [index]: measuredHeight
+    };
 
     // this forces the list to rerender items after the item positions resizing
     if (list.current) {
@@ -122,7 +122,7 @@ function MenuList (props) {
       height={menuHeight}
       itemCount={itemCount}
       itemData={children}
-      itemSize={index => measuredHeights[index] || heights[index]}
+      itemSize={index => measuredHeights.current[index] || heights[index]}
     >
     {({ data, index, style}) => (
       <div
