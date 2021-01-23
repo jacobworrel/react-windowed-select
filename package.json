@@ -16,41 +16,43 @@
     "storybook:ci": "npm run storybook -- --ci --quiet",
     "build-storybook": "build-storybook",
     "build": "webpack",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "check": "npm-check -u -E"
   },
   "dependencies": {
-    "react-select": "3.1.0",
-    "react-window": "1.8.5"
+    "react-select": "^4.0.0",
+    "react-window": "^1.8.6"
   },
   "author": "",
   "license": "MIT",
   "peerDependencies": {
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0"
+    "react": "^16.8.0 || ^17.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.9.6",
-    "@babel/preset-env": "^7.9.6",
-    "@babel/preset-react": "^7.9.4",
-    "@storybook/addon-actions": "^5.3.18",
-    "@storybook/addon-links": "^5.3.18",
-    "@storybook/addons": "^5.3.18",
-    "@storybook/react": "^5.3.18",
-    "@testing-library/react": "^10.2.1",
-    "babel-jest": "^26.0.1",
-    "babel-loader": "^8.1.0",
-    "concurrently": "^5.2.0",
-    "cypress": "^4.7.0",
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "@babel/preset-react": "^7.12.10",
+    "@storybook/addon-actions": "^5.3.21",
+    "@storybook/addon-links": "^5.3.21",
+    "@storybook/addons": "^5.3.21",
+    "@storybook/react": "^5.3.21",
+    "@testing-library/react": "^10.4.9",
+    "babel-jest": "^26.6.3",
+    "babel-loader": "^8.2.2",
+    "concurrently": "^5.3.0",
+    "cypress": "^4.12.1",
     "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.15.2",
-    "html-webpack-plugin": "^4.3.0",
-    "jest": "^26.0.1",
-    "ramda": "0.27.0",
-    "react-test-renderer": "^16.8.0",
-    "start-server-and-test": "^1.11.0",
-    "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.11.0"
+    "enzyme-adapter-react-16": "^1.15.6",
+    "html-webpack-plugin": "^4.5.1",
+    "jest": "^26.6.3",
+    "npm-check": "^5.9.2",
+    "ramda": "^0.27.1",
+    "react-test-renderer": "^16.14.0",
+    "start-server-and-test": "^1.11.7",
+    "webpack": "^4.46.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.2"
   },
   "jest": {
     "coveragePathIgnorePatterns": [
