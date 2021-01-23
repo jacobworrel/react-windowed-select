@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [3.0.0] - 2021-01-23
+### Updated
+- react-select major version update
+- react-window patch version update
+- peer deps to add support for React 17
+- dev dep minor/patch versions
+
+## [2.0.5] - 2021-01-02
+### Fixed
+- invariant violation bug on Windows 10 Firefox 
+
+## [2.0.3] - 2020-11-02
+### Fixed
+- broken npm publish
+### Updated
+- dependency patch versions
+
 ## [2.0.3] - 2020-06-19
 ### Fixed
 - options with long label text from overflowing outside container
