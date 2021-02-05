@@ -155,10 +155,7 @@ function MenuItem({
     if (ref.current) {
       const measuredHeight = ref.current.getBoundingClientRect().height;
 
-      // only set menu item height when needed, else MenuList is rerendered for each windowed menu item
-      if (measuredHeight > height) {
-        setMeasuredHeight({ index, measuredHeight });
-      }
+      setMeasuredHeight({ index, measuredHeight });
     }
   }, [ref.current]);
 
