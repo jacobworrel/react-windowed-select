@@ -30,7 +30,7 @@ describe('Default Select', () => {
   });
 
   it(`scrolls on arrow down`, () => {
-    cy.get("#explorerselect--default").click();
+    cy.get("#select--default").click();
     const focusedInput = getIframeBody().find('#default', { timeout: 15000 })
       .find('input')
       .first()
