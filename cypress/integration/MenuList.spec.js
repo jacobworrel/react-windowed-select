@@ -25,19 +25,45 @@ const getIframeBody = () => {
 };
 
 describe('Default Select', () => {
-  beforeEach(() => {
-    cy.visit('http://localhost:6006/?path=/story/select--default');
-  });
-
   it(`scrolls on arrow down`, () => {
+    const story = 'default';
+    cy.visit(`http://localhost:6006/?path=/story/select--${story}`);
     cy.get("#select--default").click();
-    const focusedInput = getIframeBody().find('#default', { timeout: 15000 })
+    const focusedInput = getIframeBody().find(`#${story}`, { timeout: 15000 })
       .find('input')
       .first()
       .focus();
 
     R.times(() => focusedInput.type('{downarrow}', { force: true }), 15);
 
-    getIframeBody().find('.default__menu-list').contains('Option 15');
+    getIframeBody().find(`.${story}__menu-list`).contains('Option 15');
+  });
+
+  it(`should have dynamic no options input value`, () => {
+    const story = 'no-options-msg-with-dynamic-input-value';
+    cy.visit(`http://localhost:6006/?path=/story/select--${story}`);
+    cy.get(`#select--${story}`).click();
+    const focusedInput = getIframeBody().find(`#${story}`, { timeout: 15000 })
+      .find('input')
+      .first()
+      .focus();
+
+    focusedInput.type('darn', { force: true });
+
+    getIframeBody().find(`.${story}__menu-list`).contains('No darn options');
+  });
+
+  it(`should have dynamic loading input value`, () => {
+    const story = 'loading-msg-with-dynamic-input-value';
+    cy.visit(`http://localhost:6006/?path=/story/select--${story}`);
+    cy.get(`#select--${story}`).click();
+    const focusedInput = getIframeBody().find(`#${story}`, { timeout: 15000 })
+      .find('input')
+      .first()
+      .focus();
+
+    focusedInput.type('cool stuff', { force: true });
+
+    getIframeBody().find(`.${story}__menu-list`).contains('Loading cool stuff...');
   });
 });
