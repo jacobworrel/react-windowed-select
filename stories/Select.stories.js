@@ -32,8 +32,8 @@ storiesOf('Select', module)
 ))
 .add('no options msg (with dynamic input value)', () => (
   <StoryWrapper
-    id="noOptionsDynamicValue"
-    classNamePrefix="noOptionsDynamicValue"
+    id="no-options-msg-with-dynamic-input-value"
+    classNamePrefix="no-options-msg-with-dynamic-input-value"
     menuIsOpen
     options={[]}
     noOptionsMessage={({ inputValue } = {}) => `No ${inputValue !== '' ? `${inputValue} ` : ''}options`}
@@ -41,8 +41,8 @@ storiesOf('Select', module)
 ))
 .add('loading msg (with dynamic input value', () => (
   <StoryWrapper
-    id="loadingDynamicValue"
-    classNamePrefix="loadingDynamicValue"
+    id="loading-msg-with-dynamic-input-value"
+    classNamePrefix="loading-msg-with-dynamic-input-value"
     isLoading
     loadingMessage={({ inputValue }) => `Loading ${inputValue}...`}
     menuIsOpen
