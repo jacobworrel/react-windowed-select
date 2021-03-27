@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import * as React from 'react';
 
 export function calcOptionsLength (options) {
   options = options || [];
