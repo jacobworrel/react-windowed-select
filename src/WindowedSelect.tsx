@@ -1,9 +1,9 @@
 import MenuList from './MenuList';
 import * as React from 'react';
-import Select, { Props } from 'react-select';
+import Select, { Props as SelectProps } from 'react-select';
 import { calcOptionsLength } from './util';
 
-interface WindowedSelectProps extends Props {
+interface WindowedSelectProps extends SelectProps {
   windowThreshold: number
 }
 
