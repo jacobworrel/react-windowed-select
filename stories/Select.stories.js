@@ -4,8 +4,25 @@ import { storiesOf } from '@storybook/react';
 
 import { options1 } from './storyUtil';
 import { options200 } from './storyUtil';
-import { groupedOptions, StoryWrapper } from './storyUtil';
+import { groupedOptions } from './storyUtil';
 import { optionsLongLabel } from './storyUtil';
+import WindowedSelect from '../src';
+
+function StoryWrapper (props) {
+  return (
+    <>
+      <div>Windowed:</div>
+      <WindowedSelect
+        windowThreshold={0}
+        {...props}
+      />
+      <div style={{ marginTop: 320 }}/>
+      <div>Not windowed:</div>
+      <WindowedSelect {...props} />
+    </>
+  );
+}
+
 storiesOf('Select', module)
 .add('Default', () => (
   <StoryWrapper
