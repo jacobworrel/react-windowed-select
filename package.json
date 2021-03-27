@@ -20,6 +20,10 @@
     "check": "npm-check -u -E"
   },
   "dependencies": {
+    "@types/react": "^17.0.3",
+    "@types/react-dom": "^17.0.3",
+    "@types/react-select": "^4.0.13",
+    "@types/react-window": "^1.8.2",
     "react-select": "^4.0.0",
     "react-window": "^1.8.6"
   },
@@ -52,6 +56,8 @@
     "react-dom": "^16.14.0",
     "react-test-renderer": "^16.14.0",
     "start-server-and-test": "^1.11.7",
+    "ts-loader": "^8.0.18",
+    "typescript": "^4.2.3",
     "webpack": "^4.46.0",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.2"
