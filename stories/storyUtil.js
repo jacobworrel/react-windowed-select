@@ -1,6 +1,4 @@
 import * as R from 'ramda';
-import WindowedSelect from '../src';
-import React from 'react';
 
 export const createOptions = R.map(x => ({ value: x, label: `Option ${x}` }));
 
@@ -25,18 +23,3 @@ export const optionsLongLabel = R.pipe(
   R.map(x => ({ value: x, label: `Option ${x}` })),
   R.insert(3, { value: 'long', label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum' })
 )(R.range(0, 15));
-
-export function StoryWrapper (props) {
-  return (
-    <>
-      <div>Windowed:</div>
-      <WindowedSelect
-        windowThreshold={0}
-        {...props}
-      />
-      <div style={{ marginTop: 320 }}/>
-      <div>Not windowed:</div>
-      <WindowedSelect {...props} />
-    </>
-  );
-}

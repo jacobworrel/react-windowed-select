@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import * as React from 'react';
 
 export function calcOptionsLength (options) {
   options = options || [];
@@ -30,7 +30,7 @@ export function flattenGroupedChildren (children) {
   }, []);
 }
 
-export function isFocused ({ props: { isFocused } = {} } = {}) {
+export function isFocused ({ props: { isFocused } }) {
   return isFocused === true;
 }
 
@@ -46,8 +46,8 @@ export function createGetHeight ({
   noOptionsMsgStyles,
   optionStyles,
   loadingMsgStyles,
-} = {}) {
-  return function getHeight (child = {}) {
+}) {
+  return function getHeight (child) {
     const {
       props: {
         type,
@@ -56,8 +56,8 @@ export function createGetHeight ({
         selectProps: {
           noOptionsMessage,
           loadingMessage,
-        } = {},
-      } = {}
+        },
+      }
     } = child;
 
     if (type === 'group') {
@@ -82,4 +82,4 @@ export function createGetHeight ({
   };
 }
 
-export const sum = (a, b) => a + b;
+export const sum = (a: number, b: number): number => a + b;

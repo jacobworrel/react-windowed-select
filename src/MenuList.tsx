@@ -5,29 +5,44 @@ import {
   sum,
 } from './util';
 
-import React, { forwardRef, useRef, useMemo, useEffect, useLayoutEffect } from 'react';
-import { VariableSizeList as List } from 'react-window';
+import * as React from 'react';
+import { ListChildComponentProps, VariableSizeList as List } from 'react-window';
+import { OptionProps, GroupTypeBase, OptionTypeBase } from 'react-select';
+
+interface Style extends React.CSSProperties {
+  top: number,
+}
+
+interface ListChildProps extends ListChildComponentProps {
+  style: Style
+}
 
 function MenuList (props) {
-  const children = useMemo(
+  const children = React.useMemo(
     () => {
       const children = React.Children.toArray(props.children);
 
       const head = children[0] || {};
-      const {
-        props: {
-          data: {
-            options = []
-          } = {},
-        } = {},
-      } = head;
-      const groupedChildrenLength = options.length;
-      const isGrouped = groupedChildrenLength > 0;
-      const flattenedChildren = isGrouped && flattenGroupedChildren(children);
 
-      return isGrouped
-        ? flattenedChildren
-        : children;
+      if (React.isValidElement<OptionProps<OptionTypeBase, boolean, GroupTypeBase<OptionTypeBase>>>(head)) {
+        const {
+          props: {
+            data: {
+              options = []
+            } = {},
+          } = {},
+        } = head;
+        const groupedChildrenLength = options.length;
+        const isGrouped = groupedChildrenLength > 0;
+        const flattenedChildren = isGrouped && flattenGroupedChildren(children);
+
+        return isGrouped
+          ? flattenedChildren
+          : children;
+      }
+      else {
+        return [];
+      }
     },
     [props.children]
   );
@@ -44,14 +59,14 @@ function MenuList (props) {
     loadingMsgStyles,
   });
 
-  const heights = useMemo(() => children.map(getHeight), [children]);
-  const currentIndex = useMemo(() => getCurrentIndex(children), [children]);
+  const heights = React.useMemo(() => children.map(getHeight), [children]);
+  const currentIndex = React.useMemo(() => getCurrentIndex(children), [children]);
 
   const itemCount = children.length;
 
   // calc menu height
   const { maxHeight, paddingBottom = 0, paddingTop = 0, ...menuListStyle } = getStyles('menuList', props);
-  const totalHeight = useMemo(() => heights.reduce(sum, 0), [heights]);
+  const totalHeight = React.useMemo(() => heights.reduce(sum, 0), [heights]);
   const totalMenuHeight = totalHeight + paddingBottom + paddingTop;
   const menuHeight = Math.min(maxHeight, totalMenuHeight);
   const estimatedItemSize = Math.floor(totalHeight / itemCount);
@@ -62,11 +77,11 @@ function MenuList (props) {
   } = props;
 
   const { classNamePrefix, isMulti } = selectProps || {};
-  const list = useRef(null);
+  const list = React.useRef<List>(null);
 
 
-  const measuredHeights = useRef({});
-  useEffect(
+  const measuredHeights = React.useRef({});
+  React.useEffect(
     () => {
       measuredHeights.current = {};
     },
@@ -90,7 +105,7 @@ function MenuList (props) {
     }
   };
 
-  useEffect(
+  React.useEffect(
     () => {
       /**
        * enables scrolling on key down arrow
@@ -109,7 +124,7 @@ function MenuList (props) {
       ref={list}
       outerRef={innerRef}
       estimatedItemSize={estimatedItemSize}
-      innerElementType={forwardRef(({ style, ...rest }, ref) => (
+      innerElementType={React.forwardRef(({ style, ...rest }, ref) => (
         <div
           ref={ref}
           style={{
@@ -120,24 +135,27 @@ function MenuList (props) {
         />
       ))}
       height={menuHeight}
+      width="100%"
       itemCount={itemCount}
       itemData={children}
       itemSize={index => measuredHeights.current[index] || heights[index]}
     >
-    {({ data, index, style}) => (
-      <div
-        style={{
-          ...style,
-          top: `${parseFloat(style.top) + paddingTop}px`,
-        }}>
-        <MenuItem
-          data={data[index]} 
-          index={index}
-          setMeasuredHeight={setMeasuredHeight}
-          height={heights[index]}
-        />
-      </div>
-    )}
+    {({ data, index, style}: ListChildProps) => {
+      return (
+        <div
+          style={{
+            ...style,
+            top: `${parseFloat(style.top.toString()) + paddingTop}px`,
+          }}>
+          <MenuItem
+            data={data[index]}
+            index={index}
+            setMeasuredHeight={setMeasuredHeight}
+            height={heights[index]}
+          />
+        </div>
+      )
+    }}
     </List>
   );
 }
@@ -148,10 +166,10 @@ function MenuItem({
   setMeasuredHeight,
   height,
 }) {
-  const ref = useRef();
+  const ref = React.useRef<HTMLDivElement>(null);
 
   // using useLayoutEffect prevents bounciness of options of re-renders
-  useLayoutEffect(() => {
+  React.useLayoutEffect(() => {
     if (ref.current) {
       const measuredHeight = ref.current.getBoundingClientRect().height;
 

@@ -43,11 +43,21 @@ describe(`util`, () => {
       loadingMsgStyles,
     });
 
+    const defaultChildProps = {
+      children: '',
+      inputValue: '',
+      selectProps: {
+        noOptionsMessage: () => {},
+        loadingMessage: () => {},
+      },
+    };
+
     test(`returns group height`, () => {
       const child = {
         props: {
+          ...defaultChildProps,
           type: 'group',
-        },
+        }
       };
 
       expect(getHeight(child)).toEqual(0);
@@ -57,6 +67,7 @@ describe(`util`, () => {
       const child = {
         props: {
           type: 'option',
+          ...defaultChildProps,
         },
       };
 
@@ -66,8 +77,10 @@ describe(`util`, () => {
     test(`returns noOptionsMessage height`, () => {
       const child = {
         props: {
+          ...defaultChildProps,
           children: 'No Options',
           selectProps: {
+            ...defaultChildProps.selectProps,
             noOptionsMessage: () => 'No Options',
           },
         },
@@ -80,9 +93,11 @@ describe(`util`, () => {
       const noOptionsMessage = jest.fn(({ inputValue }) => inputValue);
       const child = {
         props: {
+          ...defaultChildProps,
           children: 'Foo',
           inputValue: 'Foo',
           selectProps: {
+            ...defaultChildProps.selectProps,
             noOptionsMessage,
           },
         },
@@ -95,8 +110,10 @@ describe(`util`, () => {
     test(`returns loadingMessage height`, () => {
       const child = {
         props: {
+          ...defaultChildProps,
           children: 'Loading...',
           selectProps: {
+            ...defaultChildProps.selectProps,
             loadingMessage: () => 'Loading...',
           },
         },
@@ -109,9 +126,11 @@ describe(`util`, () => {
       const loadingMessage = jest.fn(({ inputValue }) => inputValue);
       const child = {
         props: {
+          ...defaultChildProps,
           children: 'Foo',
           inputValue: 'Foo',
           selectProps: {
+            ...defaultChildProps.selectProps,
             loadingMessage,
           },
         },
@@ -122,7 +141,7 @@ describe(`util`, () => {
     });
 
     test(`returns default height`, () => {
-      expect(getHeight({})).toEqual(35);
+      expect(getHeight({ props: defaultChildProps })).toEqual(35);
     });
 
     describe(`when no height in custom styles`, () => {
@@ -136,8 +155,10 @@ describe(`util`, () => {
       test(`returns default height when no height in loadingMessage styles`, () => {
         expect(getHeight({
           props: {
+            ...defaultChildProps,
             children: 'Loading...',
             selectProps: {
+              ...defaultChildProps.selectProps,
               loadingMessage: () => 'Loading...',
             },
           },
@@ -147,8 +168,10 @@ describe(`util`, () => {
       test(`returns default height when no height in noOptionsMessage styles`, () => {
         expect(getHeight({
           props: {
+            ...defaultChildProps,
             children: 'No Options',
             selectProps: {
+              ...defaultChildProps.selectProps,
               noOptionsMessage: () => 'No Options',
             },
           },
@@ -158,6 +181,7 @@ describe(`util`, () => {
       test(`returns default height when no height in option styles`, () => {
         expect(getHeight({
           props: {
+            ...defaultChildProps,
             type: 'option',
           },
         })).toEqual(35);
@@ -166,14 +190,11 @@ describe(`util`, () => {
       test(`returns default height when no height in group styles`, () => {
         expect(getHeight({
           props: {
+            ...defaultChildProps,
             type: 'group',
           },
         })).toEqual(25);
       });
-    });
-
-    test(`negative: handles noop`, () => {
-      expect(() => createGetHeight()()).not.toThrow();
     });
   });
 
@@ -232,10 +253,6 @@ describe(`util`, () => {
       expect(isFocused({ props: { isFocused: false } })).toEqual(false);
 
       expect(isFocused({ props: {} })).toEqual(false);
-    });
-
-    test(`negative: handles noop`, () => {
-      expect(() => isFocused()).not.toThrow();
     });
   });
 });

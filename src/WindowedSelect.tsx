@@ -1,10 +1,14 @@
 import MenuList from './MenuList';
-import React, { useMemo } from 'react';
-import Select from 'react-select';
+import * as React from 'react';
+import Select, { Props as SelectProps } from 'react-select';
 import { calcOptionsLength } from './util';
 
-function WindowedSelect ({ windowThreshold = 100, ...passedProps }, ref) {
-  const optionsLength = useMemo(
+interface WindowedSelectProps extends SelectProps {
+  windowThreshold: number
+}
+
+function WindowedSelect ({ windowThreshold = 100, ...passedProps }: WindowedSelectProps, ref) {
+  const optionsLength = React.useMemo(
     () => calcOptionsLength(passedProps.options),
     [passedProps.options]
   );
