@@ -30,11 +30,12 @@ describe('MenuList', () => {
   //   expect(resetAfterIndex.mock.calls.length).toBe(1);
   // });
 
+  const MockComponent = () => (<div/>);
+  const children = [
+    React.createElement(MockComponent, { key: 1, selectProps: {} }),
+  ];
+
   test('add class name prefix to menu list', () => {
-    const MockComponent = () => (<div/>);
-    const children = [
-      React.createElement(MockComponent, { key: 1 }),
-    ];
     const props = {
       selectProps: {
         classNamePrefix: 'foo',
@@ -51,10 +52,6 @@ describe('MenuList', () => {
   });
 
   test('add class name prefix to menu list when isMulti is true', () => {
-    const MockComponent = () => (<div/>);
-    const children = [
-      React.createElement(MockComponent, { key: 1 }),
-    ];
     const props = {
       selectProps: {
         classNamePrefix: 'foo',
