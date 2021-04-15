@@ -1,8 +1,9 @@
 {
   "name": "react-windowed-select",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "",
   "main": "dist/main.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist/main.js"
   ],

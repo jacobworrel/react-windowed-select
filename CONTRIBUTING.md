@@ -16,7 +16,7 @@
 
 ## Running Unit Tests
 
-- `npm test:cov` will run the unit tests once and produce a coverage report in `coverage/`.
+- `npm run test:cov` will run the unit tests once and produce a coverage report in `coverage/`.
 
 ## Running End to End Tests
 
