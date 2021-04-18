@@ -1,8 +1,8 @@
 import MenuList from './MenuList';
 import * as React from 'react';
+import {useState} from 'react';
 import Select, {createFilter, Props as SelectProps} from 'react-select';
 import {calcOptionsLength} from './util';
-import {useState} from "react";
 
 interface WindowedSelectProps extends SelectProps {
     windowThreshold: number
@@ -20,21 +20,17 @@ function WindowedSelect({windowThreshold = 100, ...passedProps}: WindowedSelectP
 
     const optionsLength = React.useMemo(
         () => {
-            console.log('memo', passedProps.options?.length, inputValue);
             const option = passedProps.options || [];
             const filteredOptions = option.filter(({label, value, ...data}) => filterOption({
                 label,
                 value,
                 data
             }, inputValue));
-            let optionsLength1 = calcOptionsLength(filteredOptions);
-            console.log('optionslenght', optionsLength1);
-            return optionsLength1;
+            return calcOptionsLength(filteredOptions);
         },
         [passedProps.options, inputValue]
     );
     const isWindowed = optionsLength >= windowThreshold;
-    console.log('windowed?', isWindowed, optionsLength, windowThreshold)
     return (
         <Select
             {...passedProps}

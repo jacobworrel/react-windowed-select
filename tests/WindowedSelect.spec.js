@@ -54,15 +54,18 @@ describe('WindowedSelect', () => {
     expect(selectWrapper.find(WindowedMenuList).exists()).toBeTruthy();
   });
 
-  test('renders a non-windowed menu when options length < windowThreshold', () => {
+  test('renders a non-windowed menu when options length > windowThreshold but the filtered options are smaller', () => {
     const options = [
       { label: 'foo', value: 1 },
+      { label: 'bar', value: 2 },
+      { label: 'foo bar', value: 3 },
     ];
 
     let selectWrapper = mount(
       <WindowedSelect
         menuIsOpen
         options={options}
+        inputValue={'foo bar'}
         windowThreshold={2}
       />
     );

@@ -1,11 +1,11 @@
 {
   "name": "react-windowed-select",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "",
   "main": "dist/main.js",
   "types": "dist/index.d.ts",
   "files": [
-    "dist/main.js"
+    "dist"
   ],
   "scripts": {
     "start": "webpack-dev-server --mode development --config webpack.demo.config.js",
@@ -21,11 +21,11 @@
     "check": "npm-check -u -E"
   },
   "dependencies": {
-    "@types/react": "^17.0.3",
-    "@types/react-dom": "^17.0.3",
-    "@types/react-select": "^4.0.13",
+    "@types/react": "^16.14.5",
+    "@types/react-dom": "^16.9.12",
+    "@types/react-select": "^4.0.15",
     "@types/react-window": "^1.8.2",
-    "react-select": "^4.0.0",
+    "react-select": "^4.3.0",
     "react-window": "^1.8.6"
   },
   "author": "",
@@ -35,18 +35,18 @@
     "react-dom": "^16.8.0 || ^17.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.10",
-    "@babel/preset-env": "^7.12.11",
-    "@babel/preset-react": "^7.12.10",
+    "@babel/core": "^7.13.15",
+    "@babel/preset-env": "^7.13.15",
+    "@babel/preset-react": "^7.13.13",
     "@babel/preset-typescript": "^7.13.0",
-    "@storybook/addon-actions": "^6.1.21",
-    "@storybook/addon-links": "^6.1.21",
-    "@storybook/addons": "^6.1.21",
-    "@storybook/react": "^6.1.21",
-    "@testing-library/react": "^10.4.9",
+    "@storybook/addon-actions": "^6.2.5",
+    "@storybook/addon-links": "^6.2.5",
+    "@storybook/addons": "^6.2.5",
+    "@storybook/react": "^6.2.5",
+    "@testing-library/react": "^11.2.6",
     "babel-jest": "^26.6.3",
     "babel-loader": "^8.2.2",
-    "concurrently": "^5.3.0",
+    "concurrently": "^6.0.1",
     "cypress": "^4.12.1",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
@@ -57,7 +57,7 @@
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-test-renderer": "^16.14.0",
-    "start-server-and-test": "^1.11.7",
+    "start-server-and-test": "^1.12.1",
     "ts-loader": "^8.0.18",
     "typescript": "^4.2.3",
     "webpack": "^4.46.0",
