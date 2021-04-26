@@ -13,7 +13,7 @@ function StoryWrapper (props) {
     <>
       <div>Windowed:</div>
       <WindowedSelect
-        windowThreshold={0}
+        windowThreshold={2}
         {...props}
       />
       <div style={{ marginTop: 320 }}/>
