@@ -17,5 +17,4 @@ branches:
 script:
   - npm run test:cov
   - npm run build-storybook
-  - npx sb extract
   - npm run cy:ci
