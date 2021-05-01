@@ -1,7 +1,7 @@
 import * as stories from './../../storybook-static/stories.json';
 import * as R from 'ramda';
 
-describe(`storybook`, () => {
+describe.skip(`storybook`, () => {
   const storyNameList = R.pipe(
     R.prop('stories'),
     R.keys,
