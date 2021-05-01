@@ -68,7 +68,9 @@
   "jest": {
     "coveragePathIgnorePatterns": [
       "<rootDir>/node_modules/",
-      "<rootDir>/tests/"
+      "<rootDir>/tests/",
+      "<rootDir>/stories/",
+      "<rootDir>/.storybook/"
     ],
     "testPathIgnorePatterns": [
       "<rootDir>/node_modules/",

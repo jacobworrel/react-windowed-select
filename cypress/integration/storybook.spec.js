@@ -1,4 +1,4 @@
-import * as stories from './../../storybook-static/stories.json';
+// import * as stories from './../../storybook-static/stories.json';
 import * as R from 'ramda';
 
 describe.skip(`storybook`, () => {
