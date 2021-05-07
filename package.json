@@ -1,6 +1,6 @@
 {
   "name": "react-windowed-select",
-  "version": "3.0.3",
+  "version": "3.1.2",
   "description": "",
   "main": "dist/main.js",
   "types": "dist/index.d.ts",
@@ -42,6 +42,7 @@
     "@storybook/addon-actions": "^6.2.5",
     "@storybook/addon-links": "^6.2.5",
     "@storybook/addons": "^6.2.5",
+    "@storybook/addon-storyshots": "^6.2.9",
     "@storybook/react": "^6.2.5",
     "@testing-library/react": "^11.2.6",
     "babel-jest": "^26.6.3",
@@ -67,7 +68,9 @@
   "jest": {
     "coveragePathIgnorePatterns": [
       "<rootDir>/node_modules/",
-      "<rootDir>/tests/"
+      "<rootDir>/tests/",
+      "<rootDir>/stories/",
+      "<rootDir>/.storybook/"
     ],
     "testPathIgnorePatterns": [
       "<rootDir>/node_modules/",
