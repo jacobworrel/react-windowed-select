@@ -64,9 +64,20 @@ function MenuList (props) {
 
   const itemCount = children.length;
 
+  const [measuredHeights, setMeasuredHeights] = React.useState({});
+
   // calc menu height
   const { maxHeight, paddingBottom = 0, paddingTop = 0, ...menuListStyle } = getStyles('menuList', props);
-  const totalHeight = React.useMemo(() => heights.reduce(sum, 0), [heights]);
+  const totalHeight = React.useMemo(() => {
+    return heights.reduce((sum, height, idx) => {
+      if (measuredHeights[idx]) {
+        return sum + measuredHeights[idx];
+      }
+      else {
+        return sum + height;
+      }
+    }, 0);
+  }, [heights, measuredHeights]);
   const totalMenuHeight = totalHeight + paddingBottom + paddingTop;
   const menuHeight = Math.min(maxHeight, totalMenuHeight);
   const estimatedItemSize = Math.floor(totalHeight / itemCount);
@@ -79,25 +90,23 @@ function MenuList (props) {
   const { classNamePrefix, isMulti } = selectProps || {};
   const list = React.useRef<List>(null);
 
-
-  const measuredHeights = React.useRef({});
   React.useEffect(
     () => {
-      measuredHeights.current = {};
+      setMeasuredHeights({});
     },
     [props.children]
   );
 
   // method to pass to inner item to set this items outer height
   const setMeasuredHeight = ({ index, measuredHeight }) => {
-    if (measuredHeights.current[index] && measuredHeights.current[index] === measuredHeight) {
+    if (measuredHeights[index] !== undefined && measuredHeights[index] === measuredHeight) {
       return;
     }
 
-    measuredHeights.current = {
-      ...measuredHeights.current,
-      [index]: measuredHeight
-    };
+    setMeasuredHeights(measuredHeights => ({
+      ...measuredHeights,
+      [index]: measuredHeight,
+    }));
 
     // this forces the list to rerender items after the item positions resizing
     if (list.current) {
@@ -138,7 +147,7 @@ function MenuList (props) {
       width="100%"
       itemCount={itemCount}
       itemData={children}
-      itemSize={index => measuredHeights.current[index] || heights[index]}
+      itemSize={index => measuredHeights[index] || heights[index]}
     >
     {({ data, index, style}: ListChildProps) => {
       return (
@@ -151,7 +160,6 @@ function MenuList (props) {
             data={data[index]}
             index={index}
             setMeasuredHeight={setMeasuredHeight}
-            height={heights[index]}
           />
         </div>
       )
@@ -164,7 +172,6 @@ function MenuItem({
   data,
   index,
   setMeasuredHeight,
-  height,
 }) {
   const ref = React.useRef<HTMLDivElement>(null);
 
