@@ -99,14 +99,14 @@ function MenuList (props) {
 
   // method to pass to inner item to set this items outer height
   const setMeasuredHeight = ({ index, measuredHeight }) => {
-    if (measuredHeights[index] && measuredHeights[index] === measuredHeight) {
+    if (measuredHeights[index] !== undefined && measuredHeights[index] === measuredHeight) {
       return;
     }
 
-    setMeasuredHeights({
+    setMeasuredHeights(measuredHeights => ({
       ...measuredHeights,
       [index]: measuredHeight,
-    });
+    }));
 
     // this forces the list to rerender items after the item positions resizing
     if (list.current) {
