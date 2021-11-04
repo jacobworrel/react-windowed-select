@@ -2,29 +2,25 @@ import {
   createGetHeight,
   flattenGroupedChildren,
   getCurrentIndex,
-  sum,
+  toNumber,
 } from './util';
 
 import * as React from 'react';
 import { ListChildComponentProps, VariableSizeList as List } from 'react-window';
-import { OptionProps, GroupTypeBase, OptionTypeBase } from 'react-select';
+import { OptionProps, GroupBase, MenuListProps, GroupHeadingProps } from 'react-select';
 
-interface Style extends React.CSSProperties {
-  top: number,
+interface Option {
+  options: Array<Option>
 }
 
-interface ListChildProps extends ListChildComponentProps {
-  style: Style
-}
-
-function MenuList (props) {
+function MenuList (props: MenuListProps<Option> & GroupHeadingProps & OptionProps ) {
   const children = React.useMemo(
     () => {
       const children = React.Children.toArray(props.children);
 
       const head = children[0] || {};
 
-      if (React.isValidElement<OptionProps<OptionTypeBase, boolean, GroupTypeBase<OptionTypeBase>>>(head)) {
+      if (React.isValidElement<OptionProps<Option, boolean, GroupBase<Option>>>(head)) {
         const {
           props: {
             data: {
@@ -67,7 +63,7 @@ function MenuList (props) {
   const [measuredHeights, setMeasuredHeights] = React.useState({});
 
   // calc menu height
-  const { maxHeight, paddingBottom = 0, paddingTop = 0, ...menuListStyle } = getStyles('menuList', props);
+  const { maxHeight = 0, paddingBottom = 0, paddingTop = 0, ...menuListStyle } = getStyles('menuList', props);
   const totalHeight = React.useMemo(() => {
     return heights.reduce((sum, height, idx) => {
       if (measuredHeights[idx]) {
@@ -79,7 +75,10 @@ function MenuList (props) {
     }, 0);
   }, [heights, measuredHeights]);
   const totalMenuHeight = totalHeight + paddingBottom + paddingTop;
-  const menuHeight = Math.min(maxHeight, totalMenuHeight);
+  const menuHeight = Math.min(
+    toNumber(maxHeight), // convert to number if type string
+    totalMenuHeight
+  );
   const estimatedItemSize = Math.floor(totalHeight / itemCount);
 
   const {
@@ -129,6 +128,7 @@ function MenuList (props) {
   return (
     <List
       className={classNamePrefix ? `${classNamePrefix}__menu-list${isMulti ? ` ${classNamePrefix}__menu-list--is-multi`: ''}` : ''}
+      // @ts-ignore
       style={menuListStyle}
       ref={list}
       outerRef={innerRef}
@@ -138,7 +138,7 @@ function MenuList (props) {
           ref={ref}
           style={{
             ...style,
-            height: `${ parseFloat(style.height) + paddingBottom + paddingTop }px`
+            height: `${ toNumber(style.height) + toNumber(paddingBottom) + toNumber(paddingTop) }px`
           }}
           {...rest}
         />
@@ -149,12 +149,12 @@ function MenuList (props) {
       itemData={children}
       itemSize={index => measuredHeights[index] || heights[index]}
     >
-    {({ data, index, style}: ListChildProps) => {
+    {({ data, index, style}: ListChildComponentProps) => {
       return (
         <div
           style={{
             ...style,
-            top: `${parseFloat(style.top.toString()) + paddingTop}px`,
+            top: `${toNumber(style.top) + toNumber(paddingTop)}px`,
           }}>
           <MenuItem
             data={data[index]}

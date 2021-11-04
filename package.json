@@ -23,9 +23,8 @@
   "dependencies": {
     "@types/react": "^17.0.3",
     "@types/react-dom": "^17.0.3",
-    "@types/react-select": "^4.0.13",
     "@types/react-window": "^1.8.2",
-    "react-select": "^4.3.0",
+    "react-select": "^5.2.0",
     "react-window": "^1.8.6"
   },
   "author": "",
