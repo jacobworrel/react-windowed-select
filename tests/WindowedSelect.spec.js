@@ -83,7 +83,6 @@ describe('WindowedSelect', () => {
 
     mount(<Select ref={x => selectRef = x}/>);
 
-    expect(selectRef.state).toEqual(windowedSelectRef.state);
     expect(selectRef.context).toEqual(windowedSelectRef.context);
     expect(selectRef.refs).toEqual(windowedSelectRef.refs);
     expect(selectRef.updater).toEqual(windowedSelectRef.updater);
