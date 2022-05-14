@@ -1,6 +1,6 @@
 # react-windowed-select
 
-[![Travis][build-badge]][build]
+![example workflow](https://github.com/jacobworrel/react-windowed-select/actions/workflows/node.js.yml/badge.svg)
 [![npm package][npm-badge]][npm]
 [![Coveralls][coveralls-badge]][coveralls]
 [![Storybook][storybook-badge]][storybook]
