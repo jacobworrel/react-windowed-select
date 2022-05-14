@@ -1,13 +1,12 @@
 import {
   createGetHeight,
   flattenGroupedChildren,
-  getCurrentIndex,
-  sum,
+  getCurrentIndex
 } from './util';
 
 import * as React from 'react';
 import { ListChildComponentProps, VariableSizeList as List } from 'react-window';
-import { OptionProps, GroupTypeBase, OptionTypeBase } from 'react-select';
+import { OptionProps, GroupBase } from 'react-select';
 
 interface Style extends React.CSSProperties {
   top: number,
@@ -17,6 +16,10 @@ interface ListChildProps extends ListChildComponentProps {
   style: Style
 }
 
+interface OptionTypeBase {
+  [key: string]: any;
+}
+
 function MenuList (props) {
   const children = React.useMemo(
     () => {
@@ -24,7 +27,7 @@ function MenuList (props) {
 
       const head = children[0] || {};
 
-      if (React.isValidElement<OptionProps<OptionTypeBase, boolean, GroupTypeBase<OptionTypeBase>>>(head)) {
+      if (React.isValidElement<OptionProps<OptionTypeBase, boolean, GroupBase<OptionTypeBase>>>(head)) {
         const {
           props: {
             data: {
