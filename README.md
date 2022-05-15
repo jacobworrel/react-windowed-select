@@ -2,7 +2,7 @@
 
 ![example workflow](https://github.com/jacobworrel/react-windowed-select/actions/workflows/node.js.yml/badge.svg)
 [![npm package][npm-badge]][npm]
-[![Coveralls][coveralls-badge]][coveralls]
+[![Coverage Status](https://coveralls.io/repos/github/jacobworrel/react-windowed-select/badge.svg?branch=master)](https://coveralls.io/github/jacobworrel/react-windowed-select?branch=master)
 [![Storybook][storybook-badge]][storybook]
 
 An integration of `react-window` with `react-select` to efficiently render large lists.
