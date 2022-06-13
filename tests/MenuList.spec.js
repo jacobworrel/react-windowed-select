@@ -32,7 +32,7 @@ describe('MenuList', () => {
 
   const MockComponent = () => (<div/>);
   const children = [
-    React.createElement(MockComponent, { key: 1, selectProps: {} }),
+    React.createElement(MockComponent, { key: 1, selectProps: {}, innerProps: {id: 'mockId1'} }),
   ];
 
   test('add class name prefix to menu list', () => {

@@ -7,6 +7,7 @@ import {
 import * as React from 'react';
 import { ListChildComponentProps, VariableSizeList as List } from 'react-window';
 import { OptionProps, GroupBase } from 'react-select';
+import {useRef} from "react";
 
 interface Style extends React.CSSProperties {
   top: number,
@@ -86,9 +87,10 @@ function MenuList (props) {
   const estimatedItemSize = Math.floor(totalHeight / itemCount);
 
   const {
-    innerRef,
     selectProps,
   } = props;
+
+  const ref = useRef<HTMLDivElement>();
 
   const { classNamePrefix, isMulti } = selectProps || {};
   const list = React.useRef<List>(null);
@@ -122,52 +124,71 @@ function MenuList (props) {
       /**
        * enables scrolling on key down arrow
        */
-      if (currentIndex >= 0 && list.current !== null) {
-        list.current.scrollToItem(currentIndex);
+      const refCurrent = ref.current;
+
+      if (currentIndex >= 0 && list.current !== null && (refCurrent !== null && refCurrent !== undefined)) {
+        const currentItem = document.getElementById(children[currentIndex].props.innerProps.id)
+
+        if (currentItem) {
+          const currentItemRect = currentItem.getBoundingClientRect();
+          const menuRect = refCurrent.getBoundingClientRect();
+
+          if (Math.abs(currentItemRect.top - menuRect.bottom) <= Math.abs(currentItemRect.top - menuRect.top)) {
+            if (currentItemRect.top + 5 >= menuRect.bottom) {
+              list.current.scrollToItem(currentIndex);
+            }
+          } else {
+            if ((currentItemRect.bottom - 5) < menuRect.top) {
+              list.current.scrollToItem(currentIndex);
+            }
+          }
+        } else {
+          list.current.scrollToItem(currentIndex);
+        }
       }
     },
-    [currentIndex, children, list]
+    [currentIndex, children, list, ref]
   );
 
   return (
-    <List
-      className={classNamePrefix ? `${classNamePrefix}__menu-list${isMulti ? ` ${classNamePrefix}__menu-list--is-multi`: ''}` : ''}
-      style={menuListStyle}
-      ref={list}
-      outerRef={innerRef}
-      estimatedItemSize={estimatedItemSize}
-      innerElementType={React.forwardRef(({ style, ...rest }, ref) => (
-        <div
-          ref={ref}
-          style={{
-            ...style,
-            height: `${ parseFloat(style.height) + paddingBottom + paddingTop }px`
-          }}
-          {...rest}
-        />
-      ))}
-      height={menuHeight}
-      width="100%"
-      itemCount={itemCount}
-      itemData={children}
-      itemSize={index => measuredHeights[index] || heights[index]}
-    >
-    {({ data, index, style}: ListChildProps) => {
-      return (
-        <div
-          style={{
-            ...style,
-            top: `${parseFloat(style.top.toString()) + paddingTop}px`,
-          }}>
-          <MenuItem
-            data={data[index]}
-            index={index}
-            setMeasuredHeight={setMeasuredHeight}
-          />
-        </div>
-      )
-    }}
-    </List>
+      <List
+          className={classNamePrefix ? `${classNamePrefix}__menu-list${isMulti ? ` ${classNamePrefix}__menu-list--is-multi`: ''}` : ''}
+          style={menuListStyle}
+          ref={list}
+          outerRef={ref}
+          estimatedItemSize={estimatedItemSize}
+          innerElementType={React.forwardRef(({ style, ...rest }, ref) => (
+              <div
+                  ref={ref}
+                  style={{
+                    ...style,
+                    height: `${ parseFloat(style.height) + paddingBottom + paddingTop }px`
+                  }}
+                  {...rest}
+              />
+          ))}
+          height={menuHeight}
+          width="100%"
+          itemCount={itemCount}
+          itemData={children}
+          itemSize={index => measuredHeights[index] || heights[index]}
+      >
+        {({ data, index, style}: ListChildProps) => {
+          return (
+              <div
+                  style={{
+                    ...style,
+                    top: `${parseFloat(style.top.toString()) + paddingTop}px`,
+                  }}>
+                <MenuItem
+                    data={data[index]}
+                    index={index}
+                    setMeasuredHeight={setMeasuredHeight}
+                />
+              </div>
+          )
+        }}
+      </List>
   );
 }
 
