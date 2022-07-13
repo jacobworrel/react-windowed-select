@@ -9,6 +9,38 @@ interface WindowedSelectProps extends SelectProps {
 }
 
 function WindowedSelect ({ windowThreshold = 100, ...passedProps }: WindowedSelectProps, ref) {
+  var selectStyle = {
+    selectButton: {
+        display: "flex", 
+        marginTop: '12px', 
+        backgroundColor: 'green',
+        color: 'black',
+        fontSize: '13px',
+        padding: '8px 30px',
+        borderRadius: '5px'
+    },
+    removeButton: {
+      display: "flex", 
+      marginTop: '12px', 
+      backgroundColor: 'red',
+      color: 'black',
+      fontSize: '13px',
+      padding: '8px 30px',
+      borderRadius: '5px',
+      marginLeft: "3px"
+    },
+    buttonDisplay: {
+      display: "flex",  
+      paddingLeft: "30px"
+    },
+    selectPanel: {
+      display: "flex",  
+    },
+    selectInput: {
+      width: "130em"
+    }
+  }
+
   const optionsLength = React.useMemo(
     () => calcOptionsLength(passedProps.options),
     [passedProps.options]
@@ -27,27 +59,29 @@ function WindowedSelect ({ windowThreshold = 100, ...passedProps }: WindowedSele
   const [selectedValues, setSelectedValues] = React.useState<any[]>([]);
 
   return (
-    <div>
-    <Select
-      {...passedProps}
-      components={{
-        ...passedProps.components,
-        ...(
-          isWindowed
-            ? { MenuList }
-            : {}
-        )
-      }}
-      value={selectedValues}
-      onChange={selected => {
-        setSelectedValues(selected);
-      }}
-      ref={ref}
-    />
+    <div style={selectStyle.selectPanel}>
+      <div style={selectStyle.selectInput}>
+        <Select
+          {...passedProps}
+          components={{
+            ...passedProps.components,
+            ...(
+              isWindowed
+                ? { MenuList }
+                : {}
+            )
+          }}
+          value={selectedValues}
+          onChange={selected => {
+            setSelectedValues(selected);
+          }}
+          ref={ref}
+        />
+    </div>
     { isSelectAll && (
-      <div> 
-        <button onClick={ () => {setSelectedValues(options)}}>Select All</button>
-        <button onClick={ () => {setSelectedValues([])}}>Remove All</button>
+      <div style={selectStyle.buttonDisplay}> 
+        <button style={selectStyle.selectButton} onClick={ () => {setSelectedValues(options)}}>Select All</button>
+        <button style={selectStyle.removeButton} onClick={ () => {setSelectedValues([])}}>Remove All</button>
       </div>
       )
     }
