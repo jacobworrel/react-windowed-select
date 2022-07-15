@@ -11,35 +11,51 @@ interface WindowedSelectProps extends SelectProps {
 function WindowedSelect ({ windowThreshold = 100, ...passedProps }: WindowedSelectProps, ref) {
   var selectStyle = {
     selectButton: {
-        display: "flex", 
-        marginTop: '12px', 
-        backgroundColor: 'green',
-        color: 'black',
-        fontSize: '13px',
-        padding: '8px 30px',
-        borderRadius: '5px'
+      display: "inline-block",
+      textAlign: "center" as "center",
+      whiteSpace:"nowrap" as "nowrap",
+      verticalAlign: 'middle',
+      border: '1px solid transparent',
+      padding: '0.375rem 0.75rem',
+      fontSize: '1rem',
+      lineHeight: '1.5',
+      borderRadius: '0.25rem',
+      transition: 'color .15',
+      borderColor: '#28a745',
+      backgroundColor: '#28a745',
+      color: '#fff',
+      height: '2.5rem',
+      width: '6rem'
     },
     removeButton: {
-      display: "flex", 
-      marginTop: '12px', 
-      backgroundColor: 'red',
-      color: 'black',
-      fontSize: '13px',
-      padding: '8px 30px',
-      borderRadius: '5px',
-      marginLeft: "3px"
+      display: "inline-block",
+      textAlign: "center" as "center",
+      whiteSpace:"nowrap" as "nowrap",
+      verticalAlign: 'middle',
+      border: '1px solid transparent',
+      fontSize: '1rem',
+      lineHeight: '1.5',
+      borderRadius: '0.25rem',
+      transition: 'color .15',
+      borderColor: '#dc3545',
+      backgroundColor: '#dc3545',
+      color: '#fff',
+      height: '2.5rem',
+      width: '6rem',
     },
     buttonDisplay: {
       display: "flex",  
-      paddingLeft: "30px"
+      paddingLeft: "10px"
     },
     selectPanel: {
       display: "flex",  
     },
     selectInput: {
-      width: "130em"
+      width: "130rem",
+      maxHeight: "20rem",
+      overflowY: "auto" as "auto"
     }
-  }
+  };
 
   const optionsLength = React.useMemo(
     () => calcOptionsLength(passedProps.options),
@@ -80,8 +96,12 @@ function WindowedSelect ({ windowThreshold = 100, ...passedProps }: WindowedSele
     </div>
     { isSelectAll && (
       <div style={selectStyle.buttonDisplay}> 
-        <button style={selectStyle.selectButton} onClick={ () => {setSelectedValues(options)}}>Select All</button>
-        <button style={selectStyle.removeButton} onClick={ () => {setSelectedValues([])}}>Remove All</button>
+        <div>
+          <button style={selectStyle.selectButton} onClick={ () => {setSelectedValues(options)}}>Select All</button>
+        </div>
+        <div style={{paddingLeft: '0.5rem'}}>
+          <button style={selectStyle.removeButton} onClick={ () => {setSelectedValues([])}}>Remove All</button>
+        </div>
       </div>
       )
     }
