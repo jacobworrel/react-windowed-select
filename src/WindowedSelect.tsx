@@ -62,7 +62,19 @@ function WindowedSelect ({ windowThreshold = 100, ...passedProps }: WindowedSele
   
   const isWindowed = optionsLength >= windowThreshold;
 
-  const options:any = passedProps.options;
+  var options:any = passedProps.options;
+
+  if (options && options.length > 0 && options[0].options){
+    var allGroupOptions: { value: string; lable: string }[] = [];
+    for (var i=0; i< options.length; i++) {
+      for(var j=0; j<options[i].options.length; j++){
+        allGroupOptions.push(options[i].options[j]);
+      }
+    }
+    console.log('all groups', allGroupOptions);
+    options = allGroupOptions;
+  }
+
 
   var isSelectAll = false;
 
