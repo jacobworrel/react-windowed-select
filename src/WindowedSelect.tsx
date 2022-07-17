@@ -51,9 +51,7 @@ function WindowedSelect ({ windowThreshold = 100, ...passedProps }: WindowedSele
       display: "flex",  
     },
     selectInput: {
-      width: "130rem",
-      maxHeight: "20rem",
-      overflowY: "auto" as "auto"
+      width: "130rem"
     }
   };
 
