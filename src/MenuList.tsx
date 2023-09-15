@@ -117,25 +117,18 @@ function MenuList (props) {
     }
   };
 
-  const scrollToItem = React.useCallback(
-      () => {
-        if (currentIndex >= 0 && list.current !== null) {
-          list.current.scrollToItem(currentIndex);
-        }
-      },
-      [currentIndex, children, list]
-  );
-
   const scrollToItemOnKeyDown = React.useCallback(
       (e) => {
         if (e.keyCode === 40 || e.keyCode === 38) {
-          const element = document.activeElement
+          const element = document.activeElement;
           if (element && element.tagName === 'INPUT' && (element.getAttribute('id') ?? '').indexOf('react-select') === 0) {
-            scrollToItem();
+            if (currentIndex >= 0 && list.current !== null) {
+              list.current.scrollToItem(currentIndex);
+            }
           }
         }
       },
-      [scrollToItem]
+      [currentIndex, children, list]
   )
 
   React.useEffect(
@@ -149,7 +142,7 @@ function MenuList (props) {
           document.removeEventListener('keydown', scrollToItemOnKeyDown);
         }
       },
-      []
+      [scrollToItemOnKeyDown]
   );
 
   return (
