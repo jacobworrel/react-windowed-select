@@ -117,16 +117,30 @@ function MenuList (props) {
     }
   };
 
+  const scrollToItem = React.useCallback(
+      () => {
+        if (currentIndex >= 0 && list.current !== null) {
+          list.current.scrollToItem(currentIndex);
+        }
+      },
+      [currentIndex, list]
+  );
+
   React.useEffect(
     () => {
       /**
        * enables scrolling on key down arrow
        */
-      if (currentIndex >= 0 && list.current !== null) {
-        list.current.scrollToItem(currentIndex);
+      if (typeof document !== 'undefined') {
+        const element = document.activeElement
+        if (element && element.tagName === 'INPUT' && (element.getAttribute('id') ?? '').indexOf('react-select') === 0) {
+          scrollToItem();
+        }
+      } else {
+        scrollToItem();
       }
     },
-    [currentIndex, children, list]
+    [children, scrollToItem]
   );
 
   return (
