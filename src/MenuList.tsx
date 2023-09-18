@@ -133,6 +133,13 @@ function MenuList (props) {
 
   React.useEffect(
       () => {
+        if (currentIndex >= 0 && list.current !== null) {
+          list.current.scrollToItem(currentIndex);
+        }
+  }, [currentIndex]);
+
+  React.useEffect(
+      () => {
         /**
          * enables scrolling on key down arrow
          */
