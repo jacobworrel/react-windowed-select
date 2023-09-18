@@ -1,7 +1,6 @@
 /coverage
 /demo/dist
 /demo/node_modules
-/dist
 /storybook-static
 /node_modules
 npm-debug.log*
