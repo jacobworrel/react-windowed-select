@@ -141,6 +141,11 @@ function MenuList (props) {
 
   React.useEffect(
       () => {
+        // Set scroll position based on active element on mount
+        if (currentIndex >= 0 && list.current !== null) {
+          list.current.scrollToItem(currentIndex, 'end');
+        }
+        
         /**
          * enables scrolling on key down arrow
          */
