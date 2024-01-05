@@ -3,7 +3,7 @@
   "version": "5.1.1",
   "description": "",
   "main": "dist/main.js",
-  "module": "dist/index.js",
+  "module": "dist/main.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist"
