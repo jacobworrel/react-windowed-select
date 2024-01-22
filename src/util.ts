@@ -10,23 +10,17 @@ export function calcOptionsLength (options) {
     : options.length;
 }
 
-export function flattenGroupedChildren (children) {
+export function flattenGroupedChildren(children) {
   return children.reduce((result, child) => {
-    const {
-      props: {
-        children: nestedChildren = [],
-      },
-    } = child;
+    if (child.props.children != null && typeof child.props.children === "string") {
+      return [...result, child];
+    } else {
+      const {
+        props: { children: nestedChildren = [] },
+      } = child;
 
-    return [
-      ...result,
-      React.cloneElement(
-        child,
-        { type: 'group' },
-        []
-      ),
-      ...nestedChildren,
-    ];
+      return [...result, React.cloneElement(child, { type: "group" }, []), ...nestedChildren];
+    }
   }, []);
 }
 
