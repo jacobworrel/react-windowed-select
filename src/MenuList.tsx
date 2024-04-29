@@ -92,6 +92,7 @@ function MenuList (props) {
 
   const { classNamePrefix, isMulti } = selectProps || {};
   const list = React.useRef<List>(null);
+  const allowScroll = React.useRef<boolean>(false);
 
   React.useEffect(
     () => {
@@ -118,15 +119,43 @@ function MenuList (props) {
   };
 
   React.useEffect(
-    () => {
-      /**
-       * enables scrolling on key down arrow
-       */
-      if (currentIndex >= 0 && list.current !== null) {
-        list.current.scrollToItem(currentIndex);
-      }
-    },
-    [currentIndex, children, list]
+      () => {
+        if (currentIndex >= 0 && list.current !== null && allowScroll.current) {
+          list.current.scrollToItem(currentIndex, 'end');
+        }
+
+        allowScroll.current = false;
+      }, [currentIndex]);
+
+  const scrollToItemOnKeyDown = React.useCallback(
+      (e) => {
+        if (e.keyCode === 40 || e.keyCode === 38) {
+          const element = document.activeElement;
+          if (element && element.tagName === 'INPUT') {
+            allowScroll.current = true;
+          }
+        }
+      },
+      [children]
+  )
+
+  React.useEffect(
+      () => {
+        // Set scroll position based on active element on mount
+        if (currentIndex >= 0 && list.current !== null) {
+          list.current.scrollToItem(currentIndex, 'end');
+        }
+        
+        /**
+         * enables scrolling on key down arrow
+         */
+        document.addEventListener('keydown', scrollToItemOnKeyDown, {passive: true});
+
+        return () => {
+          document.removeEventListener('keydown', scrollToItemOnKeyDown);
+        }
+      },
+      []
   );
 
   return (
